@@ -12,9 +12,8 @@ contract BuiltNoun is ERC721 {
   uint256 public nounIdCount;
   address public renderer;
 
-  constructor(address _renderer) ERC721("Build-a-Noun", "TBA-N") {
-    renderer = _renderer;
-  }
+  // renderer and built are circularly dependent, so we need to set the renderer after the fact.
+  constructor() ERC721("Build-a-Noun", "TBA-N") {}
 
   function mint(address to) public {
     _mint(to, nounIdCount);
@@ -22,6 +21,9 @@ contract BuiltNoun is ERC721 {
   }
 
   function tokenURI (uint256 tokenId) public view override returns (string memory) {
+    if (renderer == address(0)) {
+      return ""; // sensible default!
+    }
     return Renderer(renderer).tokenURI(tokenId);
   }
 

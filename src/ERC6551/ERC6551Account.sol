@@ -5,8 +5,11 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/interfaces/IERC1271.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
-interface IERC6551Account {
+interface IERC6551Account is IERC721Receiver,
+    IERC1155Receiver {
     receive() external payable;
 
     function token()
@@ -76,6 +79,34 @@ contract ERC6551Account is IERC165, IERC1271, IERC6551Account, IERC6551Executabl
         }
 
         return bytes4(0);
+    }
+
+    function onERC721Received(address, address, uint256, bytes memory)
+        external
+        view
+        virtual
+        returns (bytes4)
+    {
+        return IERC721Receiver.onERC721Received.selector;
+    }
+
+    function onERC1155Received(address, address, uint256, uint256, bytes memory)
+        external
+        view
+        virtual
+        returns (bytes4)
+    {
+        return IERC1155Receiver.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(
+        address,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) external pure virtual returns (bytes4) {
+        return IERC1155Receiver.onERC1155BatchReceived.selector;
     }
 
     function supportsInterface(bytes4 interfaceId) external pure virtual returns (bool) {
