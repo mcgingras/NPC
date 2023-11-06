@@ -6,7 +6,7 @@ import { TraitRegistry } from "../src/TraitRegistry.sol";
 import { Renderer } from "../src/Renderer.sol";
 import { ERC6551Registry } from "../src/ERC6551/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551//ERC6551Account.sol";
-import { BuiltNoun } from "../src/BuiltNoun.sol";
+import { Citizen } from "../src/Citizen.sol";
 import { Easel } from "../src/Easel.sol";
 
 
@@ -18,7 +18,7 @@ contract RendererTest is Test {
     Renderer public renderer;
     ERC6551Registry public registry;
     ERC6551Account public simpleAccountImplementation;
-    BuiltNoun public builtNoun;
+    Citizen public citizen;
     Easel public easel;
 
     address public caller = address(1);
@@ -272,12 +272,12 @@ contract RendererTest is Test {
       traitRegistry = new TraitRegistry();
       registry = new ERC6551Registry();
       simpleAccountImplementation = new ERC6551Account();
-      builtNoun = new BuiltNoun();
+      citizen = new Citizen();
       easel = new Easel();
-      renderer = new Renderer(address(builtNoun), address(simpleAccountImplementation), address(registry), address(traitRegistry), address(easel));
+      renderer = new Renderer(address(citizen), address(simpleAccountImplementation), address(registry), address(traitRegistry), address(easel));
 
       // set renderer
-      builtNoun.setRenderer(address(renderer));
+      citizen.setRenderer(address(renderer));
 
       // add traits and setup easel
       bytes memory body =  hex"0015171f090e190e190e190e19021901000b19021901000b19021901000b19021901000b19021901000b19021901000b19021901000b19";
@@ -287,13 +287,13 @@ contract RendererTest is Test {
       _addColorsToPalette();
 
       // mint a new noun
-      builtNoun.mint(caller);
+      citizen.mint(caller);
 
       // get TBA for new noun
       uint256 tokenId = 0;
       uint256 chainId = block.chainid;
       bytes32 salt = bytes32(0);
-      address tbaAddress = registry.createAccount(address(simpleAccountImplementation), salt, chainId, address(builtNoun), tokenId);
+      address tbaAddress = registry.createAccount(address(simpleAccountImplementation), salt, chainId, address(citizen), tokenId);
 
       // mint traits to TBA
       traitRegistry.mint(tbaAddress, 0, 1, "");

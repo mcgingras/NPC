@@ -4,11 +4,11 @@ pragma solidity ^0.8.13;
 import { Renderer } from "./Renderer.sol";
 import { ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-/// @title BuiltNoun (NAME TBD! Definitely going to change.)
+/// @title Citizen (NAME TBD! Definitely going to change.)
 /// @author frog, @0xmcg on twitter.
-/// @notice ERC721 designed to be used as a base contract for build-a-noun.
+/// @notice ERC721 designed to be used as a base contract for nouns citizens.
 /// A 6551 TBA should be deployed alongside each token minted.
-contract BuiltNoun is ERC721 {
+contract Citizen is ERC721 {
   uint256 public nounIdCount;
   address public renderer;
 
