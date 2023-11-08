@@ -35,10 +35,10 @@ contract TokenMetadataExtension is Extension {
     }
 
     function ext_contractURI() external view returns (string memory uri) {
-        return "";
+        return "TEMP_CONTRACT_URI";
     }
 
     function ext_tokenURI(uint256 tokenId) external view returns (string memory uri) {
-        return "";
+        return "TEMP_TOKEN_URI";
     }
 }
