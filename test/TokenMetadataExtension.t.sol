@@ -9,21 +9,11 @@ import { TokenFactory } from "groupos/factory/TokenFactory.sol";
 import { TokenMetadataExtension } from "../src/extensions/tokenMetadataExtension.sol";
 import { ITokenMetadataExtension } from "../src/extensions/ITokenMetadataExtension.sol";
 
-interface ITokenFactory {
-  function createERC721(
-    address payable implementation,
-    address owner,
-    string memory name,
-    string memory symbol,
-    bytes calldata initData
-  ) external returns (address payable token);
-}
 
-/// @title NounCitizenTest
+/// @title TokenMetadataExtensionTest
 /// @author frog @0xmcg
 /// @notice Tests the 0xRails factory + custom metadata extensions for Noun Citizens.
-contract NounCitizenTest is Test {
-
+contract TokenMetadataExtensionTest is Test {
     address public caller = address(1);
     TokenMetadataExtension public tokenMetadataExtension = new TokenMetadataExtension();
     TokenFactory public tokenFactory = new TokenFactory();
@@ -79,5 +69,4 @@ contract NounCitizenTest is Test {
 
       vm.stopPrank();
     }
-
 }

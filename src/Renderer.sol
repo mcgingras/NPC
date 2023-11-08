@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { IERC6551Registry } from "./ERC6551/ERC6551Registry.sol";
+import { IERC6551Registry } from "./ERC6551Registry.sol";
 import { TraitRegistry } from "./TraitRegistry.sol";
 import { Easel } from "./Easel.sol";
 
