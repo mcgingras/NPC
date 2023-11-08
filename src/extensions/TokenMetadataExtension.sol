@@ -5,10 +5,6 @@ import {Extension} from "0xrails/extension/Extension.sol";
 
 // How does extension system deal with collisions?
 contract TokenMetadataExtension is Extension {
-    /*=======================
-        CONTRACT METADATA
-    =======================*/
-
     constructor() Extension() {}
 
     /*===============
