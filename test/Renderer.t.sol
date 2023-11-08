@@ -6,7 +6,7 @@ import { TraitRegistry } from "../src/TraitRegistry.sol";
 import { Renderer } from "../src/Renderer.sol";
 import { ERC6551Registry } from "../src/ERC6551/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551//ERC6551Account.sol";
-import { Citizen } from "../src/Citizen.sol";
+import { NounCitizen } from "../src/NounCitizen.sol";
 import { Easel } from "../src/Easel.sol";
 
 
@@ -18,7 +18,7 @@ contract RendererTest is Test {
     Renderer public renderer;
     ERC6551Registry public registry;
     ERC6551Account public simpleAccountImplementation;
-    Citizen public citizen;
+    NounCitizen public citizen;
     Easel public easel;
 
     address public caller = address(1);
@@ -272,7 +272,7 @@ contract RendererTest is Test {
       traitRegistry = new TraitRegistry();
       registry = new ERC6551Registry();
       simpleAccountImplementation = new ERC6551Account();
-      citizen = new Citizen();
+      citizen = new NounCitizen();
       easel = new Easel();
       renderer = new Renderer(address(citizen), address(simpleAccountImplementation), address(registry), address(traitRegistry), address(easel));
 

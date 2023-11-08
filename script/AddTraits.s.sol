@@ -17,8 +17,8 @@ contract AddTraitsScript is Script {
 
     function readInput(string memory input) view internal returns (string memory) {
       string memory inputDir = string.concat(vm.projectRoot(), "/script/input/");
-      string memory file = string.concat(input, ".json");
-      return vm.readFile(string.concat(inputDir, file));
+      string memory filePath = string.concat(input, ".json");
+      return vm.readFile(string.concat(inputDir, filePath));
     }
 
     function decodeImageType(string memory path) view internal returns (Trait[] memory) {

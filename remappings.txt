@@ -1,1 +1,3 @@
 erc6551/=lib/erc6551/src/
+0xrails/=lib/0xrails/src/
+openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/
