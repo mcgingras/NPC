@@ -4,3 +4,6 @@
 [submodule "lib/0xrails"]
 	path = lib/0xrails
 	url = https://github.com/0xStation/0xrails
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
