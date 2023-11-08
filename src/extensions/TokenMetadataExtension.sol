@@ -4,12 +4,12 @@ pragma solidity ^0.8.13;
 import {Extension} from "0xrails/extension/Extension.sol";
 
 // How does extension system deal with collisions?
-contract TokenMetadataRouterExtension is Extension {
+contract TokenMetadataExtension is Extension {
     /*=======================
         CONTRACT METADATA
     =======================*/
 
-    constructor(address router) Extension() {}
+    constructor() Extension() {}
 
     /*===============
         EXTENSION
