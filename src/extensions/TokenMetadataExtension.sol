@@ -3,8 +3,6 @@ pragma solidity ^0.8.13;
 
 import {Extension} from "0xrails/extension/Extension.sol";
 
-// should we make this UUPS or something so we can upgrade the renderer if we want?
-// Or would the move in rails be unregistering this extension and swapping out for a new one?
 // How does extension system deal with collisions?
 contract TokenMetadataRouterExtension is Extension {
     /*=======================
@@ -12,11 +10,6 @@ contract TokenMetadataRouterExtension is Extension {
     =======================*/
 
     constructor(address router) Extension() {}
-
-    // what is the point of this function?
-    function _contractRoute() internal pure returns (string memory route) {
-        return "extension";
-    }
 
     /*===============
         EXTENSION
@@ -39,5 +32,13 @@ contract TokenMetadataRouterExtension is Extension {
         } else {
             return "";
         }
+    }
+
+    function ext_contractURI() external view returns (string memory uri) {
+        return "";
+    }
+
+    function ext_tokenURI(uint256 tokenId) external view returns (string memory uri) {
+        return "";
     }
 }

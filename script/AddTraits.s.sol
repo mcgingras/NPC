@@ -2,8 +2,11 @@
 pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
+import { TraitRegistry } from "../src/TraitRegistry.sol";
 
 contract AddTraitsScript is Script {
+    address public traitRegistry;
+
     struct Trait {
       bytes rleBytes;
       string filename;
@@ -31,7 +34,7 @@ contract AddTraitsScript is Script {
       Trait[] memory decode = decodeImageType(path);
       for (uint256 i = 0; i < decode.length; i++) {
         Trait memory trait = decode[i];
-        vm.callScript("TraitRegistry", "registerTrait", trait.rleBytes);
+        TraitRegistry(traitRegistry).registerTrait(trait.rleBytes);
       }
     }
 
