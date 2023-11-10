@@ -3,14 +3,14 @@ pragma solidity ^0.8.13;
 
 import { Test, console2 } from "forge-std/Test.sol";
 import { ERC721Rails } from "0xrails/cores/ERC721/ERC721Rails.sol";
-import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
-import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
+import { IExtensions } from "0xrails/extension/interface/IExtensions.sol";
+import { Multicall } from "openzeppelin-contracts/utils/Multicall.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/ITokenMetadataExtension.sol";
-import { EquippableExtension } from "../src/extensions/EquippableExtension.sol";
-import { IEquippableExtension } from "../src/extensions/IEquippableExtension.sol";
-import { Equippable } from "../src/extensions/Equippable.sol";
+import { TokenMetadataExtension } from "../src/extensions/metadata/tokenMetadataExtension.sol";
+import { ITokenMetadataExtension } from "../src/extensions/metadata/ITokenMetadataExtension.sol";
+import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
+import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
+import { Equippable } from "../src/extensions/equippable/Equippable.sol";
 
 
 /// @title EquippableExtensionTest
