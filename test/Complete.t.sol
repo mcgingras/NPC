@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import { Test, console2 } from "forge-std/Test.sol";
 import { ERC721Rails } from "0xrails/cores/ERC721/ERC721Rails.sol";
 import { ERC1155Rails } from "0xrails/cores/ERC1155/ERC1155Rails.sol";
+import { IERC1155Rails } from "0xrails/cores/ERC1155/interface/IERC1155Rails.sol";
 import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
 import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
 import { Easel } from "../src/Easel.sol";
@@ -397,6 +398,9 @@ contract CompleteTest is Test {
       tokenIds[1] = 2;
 
       address tbaAddress = registry.account(address(accountImpl), bytes32(0), block.chainid, address(erc721tokenContract), tokenId);
+      IERC1155Rails(address(erc1155tokenContract)).mintTo(tbaAddress, 1, 1);
+      IERC1155Rails(address(erc1155tokenContract)).mintTo(tbaAddress, 2, 1);
+
       IEquippableExtension(address(erc1155tokenContract)).ext_setupEquipped(tbaAddress, tokenIds);
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(tokenId), headGlassesSVG);

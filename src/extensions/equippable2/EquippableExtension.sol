@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { IERC1155 } from "0xrails/cores/ERC1155/interface/IERC1155.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
 import { EquippableExtensionData } from "./EquippableExtensionData.sol";
 
@@ -38,6 +39,7 @@ contract EquippableExtension is Extension {
 
       for (uint256 i = 0; i < _tokenIds.length; i++) {
           uint256 tokenId = _tokenIds[i];
+          require(IERC1155(address(this)).balanceOf(owner, tokenId) > 0, "Address must own token.");
           require(tokenId != SENTINEL_TOKEN_ID && currentTokenId != tokenId, "No cycles.");
           EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = tokenId;
           currentTokenId = tokenId;

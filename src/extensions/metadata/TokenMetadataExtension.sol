@@ -83,7 +83,6 @@ contract TokenMetadataExtension is Extension {
           traitParts[i] = IRegistryExtension(account.traitContractAddress).ext_getImageDataForTrait(traitId);
       }
 
-      // return "s";
       return Easel(easel).generateSVGForParts(traitParts);
     }
 }
