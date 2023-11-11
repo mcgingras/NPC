@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { console2 } from "forge-std/Test.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
 import { TokenMetadataExtensionData } from "./TokenMetadataExtensionData.sol";
 import { Easel } from "../../Easel.sol";
 import { IERC6551Registry } from "../../ERC6551Registry.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
-import { IEquippableExtension } from "../../extensions/equippable/IEquippableExtension.sol";
+import { IEquippableExtension } from "../../extensions/equippable2/IEquippableExtension.sol";
 
 
 contract TokenMetadataExtension is Extension {
@@ -82,6 +83,7 @@ contract TokenMetadataExtension is Extension {
           traitParts[i] = IRegistryExtension(account.traitContractAddress).ext_getImageDataForTrait(traitId);
       }
 
+      // return "s";
       return Easel(easel).generateSVGForParts(traitParts);
     }
 }

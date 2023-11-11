@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { console2 } from "forge-std/Test.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
 import { RegistryExtensionData } from "./RegistryExtensionData.sol";
 
@@ -37,7 +38,7 @@ contract RegistryExtension is Extension {
 
     function ext_registerTrait(bytes memory rleBytes, string memory name) public {
       uint256 currentTraitIdCount = RegistryExtensionData.layout().traitIdCount;
-      uint256 newTraitIdCount = currentTraitIdCount++;
+      uint256 newTraitIdCount = currentTraitIdCount + 1;
       RegistryExtensionData.layout().traits[newTraitIdCount] = RegistryExtensionData.Trait({
           name: name,
           rleBytes: rleBytes
@@ -48,6 +49,7 @@ contract RegistryExtension is Extension {
     }
 
     function ext_getImageDataForTrait(uint256 traitId) public view returns (bytes memory) {
+
       RegistryExtensionData.Trait memory trait = RegistryExtensionData.layout().traits[traitId];
       return trait.rleBytes;
     }
