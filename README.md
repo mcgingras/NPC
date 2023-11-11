@@ -2,12 +2,15 @@
 
 ### Todo
 
-- [] permissions (onlyOwner etc) access?
+- [] permissions (onlyOwner etc) access... is this handled by rails?
 - [] figure out account related business
-- [] equip and unequip extension
 - [] equip + transfer guard
 - [] mint module
 - [] deploy scripts
+- [] renderer for trait
+- [] fees + payment split
+- [] contract URI
+- [] traits as "trait" of NPC
 
 ### Extensions
 
