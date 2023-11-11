@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { console2 } from "forge-std/Test.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
 import { IEquippable } from "./IEquippable.sol";
 import { IEquippableExtension } from "./IEquippableExtension.sol";
@@ -51,6 +52,7 @@ contract EquippableExtension is Extension, EquippableExtensionData {
     }
 
     function ext_getEquippedTokenIds(address owner) external view returns (uint256[] memory) {
+        console2.log(_getEquippable());
         return IEquippable(_getEquippable()).getEquippedTokenIds(owner);
     }
 }

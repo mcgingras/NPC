@@ -8,13 +8,7 @@ import { IERC6551Registry } from "../../ERC6551Registry.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
 import { IEquippableExtension } from "../../extensions/equippable/IEquippableExtension.sol";
 
-// How does extension system deal with collisions?
-/// Goal of this contract is to let anyone extend their contract with a "TBA content renderer" metadata extension.
-/// On a per collection basis, this contract should return the correct rendering logic.
-/// 1. determine TBA address for tokenId (needs collection, tokenId, implementation and salt)
-/// 2. get tokens owned by TBA address (so tokens need to be enumerable)
-/// 3. for each token, get the output
-/// 4. return the overall output as function of the sum of each token output
+
 contract TokenMetadataExtension is Extension {
     constructor(address _easel, address _erc6551Registry) Extension() {
         TokenMetadataExtensionData.layout().easel = _easel;
@@ -89,7 +83,5 @@ contract TokenMetadataExtension is Extension {
       }
 
       return Easel(easel).generateSVGForParts(traitParts);
-
-      return "TEMP_TOKEN_URI";
     }
 }
