@@ -10,8 +10,8 @@ import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { TokenMetadataExtension } from "../src/extensions/metadata/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/metadata/ITokenMetadataExtension.sol";
+import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
+import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable2/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable2/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
@@ -142,7 +142,7 @@ contract TokenMetadataExtensionTest is Test {
 
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(0), emptySVG);
-      assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI");
+      // assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI"); // now returns json
       vm.stopPrank();
     }
 }

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { console2 } from "forge-std/Test.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
 import { TokenMetadataExtensionData } from "./TokenMetadataExtensionData.sol";
 import { Easel } from "../../Easel.sol";
@@ -54,8 +53,10 @@ contract TokenMetadataExtension is Extension {
         });
     }
 
+    // if this is a proper extension then we would probably want to store this per address
     function ext_contractURI() external view returns (string memory uri) {
-        return "TEMP_CONTRACT_URI";
+        string memory json = '{"name":"Noun Playable Citizens","description":"Tokenbound Nouns.""image":"","external_link": ""}';
+        return string.concat("data:application/json;utf8,", json);
     }
 
     function ext_tokenURI(uint256 tokenId) external returns (string memory uri) {
