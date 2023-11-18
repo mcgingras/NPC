@@ -36,12 +36,9 @@ contract Easel is IEasel {
         palettes[_paletteIndex].push(_color);
     }
 
-
-    function generateSVGForPart(bytes[] memory part) public view returns (string memory) {
-      MultiPartRLEToSVG.SVGParams memory params = MultiPartRLEToSVG.SVGParams(part, "d5d7e1"); // background color...
-      return MultiPartRLEToSVG.generateSVG(params, palettes);
-    }
-
+    /**
+     * @notice Generate an SVG from a set of parts.
+     */
     function generateSVGForParts(bytes[] memory parts) public view returns (string memory) {
       MultiPartRLEToSVG.SVGParams memory params = MultiPartRLEToSVG.SVGParams(parts, "d5d7e1"); // background color...
       return MultiPartRLEToSVG.generateSVG(params, palettes);

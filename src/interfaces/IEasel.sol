@@ -18,4 +18,5 @@ interface IEasel {
 
     function addManyColorsToPalette(uint8 paletteIndex, string[] calldata newColors) external;
     function addColorToPalette(uint8 paletteIndex, string calldata newColor) external;
+    function generateSVGForParts(bytes[] memory parts) external view returns (string memory);
 }
