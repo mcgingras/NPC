@@ -20,6 +20,8 @@ contract EquippableExtension is Extension {
         selectors = new bytes4[](2);
         selectors[0] = this.ext_setupEquipped.selector;
         selectors[1] = this.ext_getEquippedTokenIds.selector;
+        selectors[2] = this.ext_addTokenId.selector;
+        selectors[3] = this.ext_removeTokenId.selector;
         return selectors;
     }
 
@@ -29,6 +31,10 @@ contract EquippableExtension is Extension {
             return "ext_setupEquipped(address,uint256[])";
         } else if (selector == this.ext_getEquippedTokenIds.selector) {
             return "ext_getEquippedTokenIds(address)";
+        } else if (selector == this.ext_addTokenId.selector) {
+            return "ext_addTokenId(address,uint256,uint256)";
+        } else if (selector == this.ext_removeTokenId.selector) {
+            return "ext_removeTokenId(address,uint256)";
         } else {
             return "";
         }
@@ -47,6 +53,34 @@ contract EquippableExtension is Extension {
 
       EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = SENTINEL_TOKEN_ID;
       EquippableExtensionData.layout()._counts[owner] = _tokenIds.length;
+    }
+
+    function ext_addTokenId(address owner, uint256 tokenId, uint256 preceedingTokenId) public {
+      require(IERC1155(address(this)).balanceOf(owner, tokenId) > 0, "Address must own token.");
+      require(tokenId != SENTINEL_TOKEN_ID, "No cycles.");
+
+      uint256 currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][SENTINEL_TOKEN_ID];
+      while (currentTokenId != SENTINEL_TOKEN_ID) {
+          require(currentTokenId != tokenId, "Token already equipped.");
+          currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId];
+      }
+
+      EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = tokenId;
+      EquippableExtensionData.layout()._equippedByOwner[owner][tokenId] = SENTINEL_TOKEN_ID;
+      EquippableExtensionData.layout()._counts[owner]++;
+    }
+
+    function ext_removeTokenId(address owner, uint256 tokenId) public {
+      uint256 currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][SENTINEL_TOKEN_ID];
+      while (currentTokenId != SENTINEL_TOKEN_ID) {
+          if (currentTokenId == tokenId) {
+              EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = EquippableExtensionData.layout()._equippedByOwner[owner][tokenId];
+              EquippableExtensionData.layout()._equippedByOwner[owner][tokenId] = 0;
+              EquippableExtensionData.layout()._counts[owner]--;
+              return;
+          }
+          currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId];
+      }
     }
 
     function ext_getEquippedTokenIds(address owner) public view returns (uint256[] memory) {
