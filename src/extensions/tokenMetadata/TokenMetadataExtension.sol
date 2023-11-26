@@ -6,7 +6,7 @@ import { TokenMetadataExtensionData } from "./TokenMetadataExtensionData.sol";
 import { Easel } from "../../Easel.sol";
 import { IERC6551Registry } from "../../ERC6551Registry.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
-import { IEquippableExtension } from "../../extensions/equippable2/IEquippableExtension.sol";
+import { IEquippableExtension } from "../../extensions/equippable/IEquippableExtension.sol";
 
 
 contract TokenMetadataExtension is Extension {

@@ -13,8 +13,8 @@ import { ERC6551Account } from "../src/ERC6551Account.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
 import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
 import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
-import { EquippableExtension } from "../src/extensions/equippable2/EquippableExtension.sol";
-import { IEquippableExtension } from "../src/extensions/equippable2/IEquippableExtension.sol";
+import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
+import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 
