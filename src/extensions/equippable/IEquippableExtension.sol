@@ -6,4 +6,5 @@ interface IEquippableExtension {
   function ext_getEquippedTokenIds(address owner) external view returns (uint256[] memory);
   function ext_addTokenId(address owner, uint256 tokenId, uint256 preceedingTokenId) external;
   function ext_removeTokenId(address owner, uint256 tokenId) external;
+  function ext_isTokenIdEquipped(address owner, uint256 tokenId) external view returns (bool);
 }

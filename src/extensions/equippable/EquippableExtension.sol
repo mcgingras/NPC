@@ -17,11 +17,12 @@ contract EquippableExtension is Extension {
 
     /// @inheritdoc Extension
     function getAllSelectors() public pure override returns (bytes4[] memory selectors) {
-        selectors = new bytes4[](4);
+        selectors = new bytes4[](5);
         selectors[0] = this.ext_setupEquipped.selector;
         selectors[1] = this.ext_getEquippedTokenIds.selector;
         selectors[2] = this.ext_addTokenId.selector;
         selectors[3] = this.ext_removeTokenId.selector;
+        selectors[4] = this.ext_isTokenIdEquipped.selector;
         return selectors;
     }
 
@@ -35,6 +36,8 @@ contract EquippableExtension is Extension {
             return "ext_addTokenId(address,uint256,uint256)";
         } else if (selector == this.ext_removeTokenId.selector) {
             return "ext_removeTokenId(address,uint256)";
+        } else if (selector == this.ext_isTokenIdEquipped.selector) {
+            return "ext_isTokenIdEquipped(address,uint256)";
         } else {
             return "";
         }
