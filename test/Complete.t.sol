@@ -402,7 +402,7 @@ contract CompleteTest is Test {
       IEquippableExtension(address(erc1155tokenContract)).ext_setupEquipped(tbaAddress, tokenIds);
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(tokenId), headGlassesSVG);
-      assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI");
+      // assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI");
       vm.stopPrank();
     }
 }

@@ -17,7 +17,7 @@ contract EquippableExtension is Extension {
 
     /// @inheritdoc Extension
     function getAllSelectors() public pure override returns (bytes4[] memory selectors) {
-        selectors = new bytes4[](2);
+        selectors = new bytes4[](4);
         selectors[0] = this.ext_setupEquipped.selector;
         selectors[1] = this.ext_getEquippedTokenIds.selector;
         selectors[2] = this.ext_addTokenId.selector;

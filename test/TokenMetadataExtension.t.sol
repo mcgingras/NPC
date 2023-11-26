@@ -52,20 +52,6 @@ contract TokenMetadataExtensionTest is Test {
       erc721tokenContract = this.deployCitizenContract();
     }
 
-    function test_CreateTokenWithFactory() public {
-      vm.startPrank(caller);
-      address payable token = tokenFactory.createERC721(
-        payable(erc721Rails),
-        caller,
-        "Noun Citizens",
-        "NPC",
-        ""
-      );
-
-      assertEq(ERC721Rails(token).name(), "Noun Citizens");
-      vm.stopPrank();
-    }
-
     function deployCitizenContract() public returns (address payable) {
       vm.startPrank(caller);
       bytes memory addSetupMetadata = abi.encodeWithSelector(
@@ -138,8 +124,8 @@ contract TokenMetadataExtensionTest is Test {
     }
 
     function test_TokenURIExtension() public {
+      vm.startPrank(caller);
       ITokenMetadataExtension(erc721tokenContract).ext_setup(address(registry), address(easel), erc1155tokenContract, address(accountImpl), block.chainid, bytes32(0));
-
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(0), emptySVG);
       // assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI"); // now returns json

@@ -45,7 +45,7 @@ contract RegistryExtensionTest is Test {
       bytes memory rleBytes = abi.encodePacked(uint8(1), uint8(2), uint8(3));
       IRegistryExtension(token).ext_registerTrait(rleBytes, "name");
 
-      assertEq(IRegistryExtension(token).ext_getImageDataForTrait(0), rleBytes);
+      assertEq(IRegistryExtension(token).ext_getImageDataForTrait(1), rleBytes);
       vm.stopPrank();
     }
 

@@ -28,6 +28,8 @@ contract MetadataTest is Test {
     address payable erc1155tokenContract;
     address payable erc721tokenContract;
 
+    string public expectedSVG = '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#d5d7e1" /><rect width="140" height="10" x="90" y="210" fill="#e9265c" /><rect width="140" height="10" x="90" y="220" fill="#e9265c" /><rect width="140" height="10" x="90" y="230" fill="#e9265c" /><rect width="140" height="10" x="90" y="240" fill="#e9265c" /><rect width="20" height="10" x="90" y="250" fill="#e9265c" /><rect width="110" height="10" x="120" y="250" fill="#e9265c" /><rect width="20" height="10" x="90" y="260" fill="#e9265c" /><rect width="110" height="10" x="120" y="260" fill="#e9265c" /><rect width="20" height="10" x="90" y="270" fill="#e9265c" /><rect width="110" height="10" x="120" y="270" fill="#e9265c" /><rect width="20" height="10" x="90" y="280" fill="#e9265c" /><rect width="110" height="10" x="120" y="280" fill="#e9265c" /><rect width="20" height="10" x="90" y="290" fill="#e9265c" /><rect width="110" height="10" x="120" y="290" fill="#e9265c" /><rect width="20" height="10" x="90" y="300" fill="#e9265c" /><rect width="110" height="10" x="120" y="300" fill="#e9265c" /><rect width="20" height="10" x="90" y="310" fill="#e9265c" /><rect width="110" height="10" x="120" y="310" fill="#e9265c" /></svg>';
+
     function setUp() public {
       easel = new Easel();
       tokenFactory = new TokenFactory();
@@ -345,7 +347,7 @@ contract MetadataTest is Test {
       uint256 tokenId1 = 1;
       uint256 tokenId2 = 2;
 
-      assertEq(ERC1155Rails(erc1155tokenContract).uri(tokenId1), "");
+      assertEq(ERC1155Rails(erc1155tokenContract).uri(tokenId1), expectedSVG);
       // assertEq(ERC721Rails(erc1155tokenContract).contractURI(), "TEMP_CONTRACT_URI");
       vm.stopPrank();
     }
