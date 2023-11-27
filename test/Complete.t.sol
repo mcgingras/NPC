@@ -97,12 +97,21 @@ contract CompleteTest is Test {
 
     function deployTraitContract() public returns (address payable) {
       vm.startPrank(caller);
-      bytes memory addSetupEquippedExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, IEquippableExtension.ext_setupEquipped.selector, address(equippableExtension)
+
+      bytes memory addAddTokenIdExtension = abi.encodeWithSelector(
+        IExtensions.setExtension.selector, IEquippableExtension.ext_addTokenId.selector, address(equippableExtension)
+      );
+
+      bytes memory addRemoveTokenIdExtension = abi.encodeWithSelector(
+        IExtensions.setExtension.selector, IEquippableExtension.ext_removeTokenId.selector, address(equippableExtension)
       );
 
       bytes memory addGetAllExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector, IEquippableExtension.ext_getEquippedTokenIds.selector, address(equippableExtension)
+      );
+
+      bytes memory addIsTokenIdEquippedExtension = abi.encodeWithSelector(
+        IExtensions.setExtension.selector, IEquippableExtension.ext_isTokenIdEquipped.selector, address(equippableExtension)
       );
 
       bytes memory addRegisterTraitExtension = abi.encodeWithSelector(
@@ -113,12 +122,13 @@ contract CompleteTest is Test {
         IExtensions.setExtension.selector, IRegistryExtension.ext_getImageDataForTrait.selector, address(registryExtension)
       );
 
-      bytes[] memory initCalls = new bytes[](4);
-      initCalls[0] = addSetupEquippedExtension;
-      initCalls[1] = addGetAllExtension;
-      initCalls[2] = addRegisterTraitExtension;
-      initCalls[3] = addGetImageDataExtension;
-
+      bytes[] memory initCalls = new bytes[](6);
+      initCalls[0] = addAddTokenIdExtension;
+      initCalls[1] = addRemoveTokenIdExtension;
+      initCalls[2] = addGetAllExtension;
+      initCalls[3] = addIsTokenIdEquippedExtension;
+      initCalls[4] = addRegisterTraitExtension;
+      initCalls[5] = addGetImageDataExtension;
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
@@ -399,7 +409,8 @@ contract CompleteTest is Test {
       IERC1155Rails(address(erc1155tokenContract)).mintTo(tbaAddress, 1, 1);
       IERC1155Rails(address(erc1155tokenContract)).mintTo(tbaAddress, 2, 1);
 
-      IEquippableExtension(address(erc1155tokenContract)).ext_setupEquipped(tbaAddress, tokenIds);
+      IEquippableExtension(address(erc1155tokenContract)).ext_addTokenId(tbaAddress, 1, 0);
+      IEquippableExtension(address(erc1155tokenContract)).ext_addTokenId(tbaAddress, 2, 1);
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(tokenId), headGlassesSVG);
       // assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI");

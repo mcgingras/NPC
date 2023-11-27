@@ -2,14 +2,11 @@
 
 ### Todo
 
-- [] permissions (onlyOwner etc) access... is this handled by rails?
-- [] figure out account related business
-- [] equip + transfer guard
 - [] mint module
 - [] deploy scripts
 - [] fees + payment split (can we just use fee manager from rails this?)
 - https://github.com/0xStation/groupos/blob/e94b09e63f422e14e066066424c2320be2b127c7/src/membership/modules/StablecoinPurchaseController.sol#L79 (fee)
-- [] traits as "trait" of NPC
+- [] traits as "trait" of NPC (tokenURI details)
 
 ### Extensions
 

@@ -5,9 +5,13 @@ import {Script, console2} from "forge-std/Script.sol";
 import { IEasel } from "../src/interfaces/IEasel.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 
+/// -----------------
+/// SCRIPTS
+/// -----------------
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/3_AddColors.s.sol:Deploy
 
-contract AddColorsScript is Script {
-    address public easel;
+contract Deploy is Script {
+    address public easel = 0xF0c5255799b29439c121f0Db6DFb969578d55f24;
     string public file;
     uint8 paletteIndex = 0;
 

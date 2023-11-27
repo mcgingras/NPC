@@ -4,9 +4,13 @@ pragma solidity ^0.8.13;
 import {Script, console2} from "forge-std/Script.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 
+/// -----------------
+/// SCRIPTS
+/// -----------------
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/4_AddTraits.s.sol:Deploy
 
-contract AddTraitsScript is Script {
-    address public erc1155tokenContract;
+contract Deploy is Script {
+    address public erc1155tokenContract = 0x4E2B820D5679CcfEAbe33Cf67872BCaE9df898dE;
 
     struct Trait {
       bytes rleBytes;
