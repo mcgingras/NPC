@@ -32,6 +32,8 @@ contract Deploy is Script {
     }
 
     function run() public {
-     addColorsToEasel("palette");
+    vm.startBroadcast();
+    addColorsToEasel(".palette");
+    vm.stopBroadcast();
     }
 }

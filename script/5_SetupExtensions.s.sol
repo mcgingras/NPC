@@ -17,12 +17,15 @@ contract Deploy is Script {
     address public easel = 0xF0c5255799b29439c121f0Db6DFb969578d55f24;
 
     function run() public {
-      ITokenMetadataExtension(npc721TokenContract).ext_setup(address(erc6551Registry),
+      vm.startBroadcast();
+      ITokenMetadataExtension(npc721TokenContract).ext_setup(
+        address(erc6551Registry),
         address(easel),
         erc1155tokenContract,
         address(erc6551AccountImpl),
         block.chainid,
         bytes32(0)
       );
+      vm.stopBroadcast();
     }
 }

@@ -44,9 +44,12 @@ contract Deploy is Script {
     }
 
     function run() public {
-      addTraitsToRegistry("images.bodies");
-      addTraitsToRegistry("images.accessories");
-      addTraitsToRegistry("images.heads");
-      addTraitsToRegistry("images.glasses");
+      vm.startBroadcast();
+      // It helps if you comment these out and do them 1 at a time
+      addTraitsToRegistry(".images.bodies");
+      // addTraitsToRegistry(".images.accessories");
+      // addTraitsToRegistry(".images.heads");
+      // addTraitsToRegistry(".images.glasses");
+      vm.stopBroadcast();
     }
 }
