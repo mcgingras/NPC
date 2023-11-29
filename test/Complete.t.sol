@@ -35,6 +35,7 @@ contract CompleteTest is Test {
     RegistryExtension public registryExtension;
     address payable erc1155tokenContract;
     address payable erc721tokenContract;
+    bytes32 salt = 0x00000000;
 
     string headGlassesSVG = '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#d5d7e1" /><rect width="140" height="10" x="90" y="210" fill="#e9265c" /><rect width="140" height="10" x="90" y="220" fill="#e9265c" /><rect width="140" height="10" x="90" y="230" fill="#e9265c" /><rect width="140" height="10" x="90" y="240" fill="#e9265c" /><rect width="20" height="10" x="90" y="250" fill="#e9265c" /><rect width="110" height="10" x="120" y="250" fill="#e9265c" /><rect width="20" height="10" x="90" y="260" fill="#e9265c" /><rect width="110" height="10" x="120" y="260" fill="#e9265c" /><rect width="20" height="10" x="90" y="270" fill="#e9265c" /><rect width="110" height="10" x="120" y="270" fill="#e9265c" /><rect width="20" height="10" x="90" y="280" fill="#e9265c" /><rect width="110" height="10" x="120" y="280" fill="#e9265c" /><rect width="20" height="10" x="90" y="290" fill="#e9265c" /><rect width="110" height="10" x="120" y="290" fill="#e9265c" /><rect width="20" height="10" x="90" y="300" fill="#e9265c" /><rect width="110" height="10" x="120" y="300" fill="#e9265c" /><rect width="20" height="10" x="90" y="310" fill="#e9265c" /><rect width="110" height="10" x="120" y="310" fill="#e9265c" /><rect width="60" height="10" x="100" y="110" fill="#cbc1bc" /><rect width="60" height="10" x="170" y="110" fill="#cbc1bc" /><rect width="10" height="10" x="100" y="120" fill="#cbc1bc" /><rect width="20" height="10" x="110" y="120" fill="#ffffff" /><rect width="20" height="10" x="130" y="120" fill="#000000" /><rect width="10" height="10" x="150" y="120" fill="#cbc1bc" /><rect width="10" height="10" x="170" y="120" fill="#cbc1bc" /><rect width="20" height="10" x="180" y="120" fill="#ffffff" /><rect width="20" height="10" x="200" y="120" fill="#000000" /><rect width="10" height="10" x="220" y="120" fill="#cbc1bc" /><rect width="40" height="10" x="70" y="130" fill="#cbc1bc" /><rect width="20" height="10" x="110" y="130" fill="#ffffff" /><rect width="20" height="10" x="130" y="130" fill="#000000" /><rect width="30" height="10" x="150" y="130" fill="#cbc1bc" /><rect width="20" height="10" x="180" y="130" fill="#ffffff" /><rect width="20" height="10" x="200" y="130" fill="#000000" /><rect width="10" height="10" x="220" y="130" fill="#cbc1bc" /><rect width="10" height="10" x="70" y="140" fill="#cbc1bc" /><rect width="10" height="10" x="100" y="140" fill="#cbc1bc" /><rect width="20" height="10" x="110" y="140" fill="#ffffff" /><rect width="20" height="10" x="130" y="140" fill="#000000" /><rect width="10" height="10" x="150" y="140" fill="#cbc1bc" /><rect width="10" height="10" x="170" y="140" fill="#cbc1bc" /><rect width="20" height="10" x="180" y="140" fill="#ffffff" /><rect width="20" height="10" x="200" y="140" fill="#000000" /><rect width="10" height="10" x="220" y="140" fill="#cbc1bc" /><rect width="10" height="10" x="70" y="150" fill="#cbc1bc" /><rect width="10" height="10" x="100" y="150" fill="#cbc1bc" /><rect width="20" height="10" x="110" y="150" fill="#ffffff" /><rect width="20" height="10" x="130" y="150" fill="#000000" /><rect width="10" height="10" x="150" y="150" fill="#cbc1bc" /><rect width="10" height="10" x="170" y="150" fill="#cbc1bc" /><rect width="20" height="10" x="180" y="150" fill="#ffffff" /><rect width="20" height="10" x="200" y="150" fill="#000000" /><rect width="10" height="10" x="220" y="150" fill="#cbc1bc" /><rect width="60" height="10" x="100" y="160" fill="#cbc1bc" /><rect width="60" height="10" x="170" y="160" fill="#cbc1bc" /></svg>';
 
@@ -85,6 +86,7 @@ contract CompleteTest is Test {
 
       address payable tokenContract = tokenFactory.createERC721(
         payable(erc721Rails),
+        salt,
         caller,
         "Noun Citizens",
         "NPC",
@@ -134,6 +136,7 @@ contract CompleteTest is Test {
 
       address payable tokenContract = tokenFactory.createERC1155(
         payable(erc1155Rails),
+        salt,
         caller,
         "NPC Trait",
         "NPCT",

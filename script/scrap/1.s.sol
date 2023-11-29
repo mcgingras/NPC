@@ -30,12 +30,9 @@ contract Deploy is Script {
         }
 
         console2.log("traitParts", traitParts.length);
-        // string memory output = Easel(easel).generateSVGForParts(traitParts);
-        // console2.log(output);
+        string memory output = Easel(easel).generateSVGForParts(traitParts);
+        console2.log(output);
 
-        MultiPartRLEToSVG.SVGParams memory params = MultiPartRLEToSVG.SVGParams(traitParts, "d5d7e1");
-        // mapping(uint8 => string[]) memory palletes = IEasel(easel).palettes();
-        Easel(easel).generateSVG(params, palletes);
         // vm.stopBroadcast();
     }
 }
