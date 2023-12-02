@@ -17,6 +17,7 @@ import { EquippableExtension } from "../src/extensions/equippable/EquippableExte
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
+import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 
 /// @title CompleteTest
@@ -24,11 +25,13 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 /// @notice E2E test.
 contract CompleteTest is Test {
     address public caller = address(1);
+    address public fake = address(2);
     ERC6551Registry public registry;
     ERC6551Account public accountImpl;
     Easel public easel;
     TokenMetadataExtension public tokenMetadataExtension;
-    TokenFactory public tokenFactory;
+    TokenFactory public tokenFactoryImpl;
+    TokenFactory public tokenFactoryProxy;
     ERC721Rails public erc721Rails;
     ERC1155Rails public erc1155Rails;
     EquippableExtension public equippableExtension;
@@ -43,12 +46,15 @@ contract CompleteTest is Test {
       registry = new ERC6551Registry();
       accountImpl = new ERC6551Account();
       easel = new Easel();
-      tokenFactory = new TokenFactory();
       erc721Rails = new ERC721Rails();
       erc1155Rails = new ERC1155Rails();
       equippableExtension = new EquippableExtension();
       registryExtension = new RegistryExtension();
       tokenMetadataExtension = new TokenMetadataExtension(address(easel), address(registry));
+
+      tokenFactoryImpl = new TokenFactory();
+      tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
+      tokenFactoryProxy.initialize(caller, fake, address(erc721Rails), address(erc1155Rails));
 
       erc1155tokenContract = this.deployTraitContract();
       erc721tokenContract = this.deployCitizenContract();
@@ -84,7 +90,7 @@ contract CompleteTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      address payable tokenContract = tokenFactory.createERC721(
+      address payable tokenContract = tokenFactoryProxy.createERC721(
         payable(erc721Rails),
         salt,
         caller,
@@ -134,7 +140,7 @@ contract CompleteTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      address payable tokenContract = tokenFactory.createERC1155(
+      address payable tokenContract = tokenFactoryProxy.createERC1155(
         payable(erc1155Rails),
         salt,
         caller,

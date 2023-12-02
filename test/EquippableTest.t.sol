@@ -11,19 +11,27 @@ import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMet
 import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
+import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 /// @title EquippableExtensionTest
 /// @author frog @0xmcg
 /// @notice Tests behavior of the equippable extension
 contract EquippableExtensionTest is Test {
     address public caller = address(1);
+    address public fake = address(2);
     EquippableExtension public equippableExtension = new EquippableExtension();
-    TokenFactory public tokenFactory = new TokenFactory();
+    TokenFactory public tokenFactoryImpl;
+    TokenFactory public tokenFactoryProxy;
     ERC1155Rails public erc1155Rails = new ERC1155Rails();
     address payable token;
+    bytes32 salt = 0x00000000;
 
     function setUp() public {
       vm.startPrank(caller);
+      tokenFactoryImpl = new TokenFactory();
+      tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
+      tokenFactoryProxy.initialize(caller, fake, fake, address(erc1155Rails));
+
       bytes memory addSetupEquippedExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector, IEquippableExtension.ext_setupEquipped.selector, address(equippableExtension)
       );
@@ -48,8 +56,9 @@ contract EquippableExtensionTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      token = tokenFactory.createERC1155(
+      token = tokenFactoryProxy.createERC1155(
         payable(erc1155Rails),
+        salt,
         caller,
         "Noun Citizens",
         "NPC",

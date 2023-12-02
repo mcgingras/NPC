@@ -8,21 +8,29 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 import { Multicall } from "openzeppelin-contracts/utils/Multicall.sol";
 import { IExtensions } from "0xrails/extension/interface/IExtensions.sol";
+import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
+
 
 
 /// @title RegistryExtensionTest
 /// @author frog @0xmcg
 /// @notice Tests for TraitRegistry contract.
 contract RegistryExtensionTest is Test {
-    TokenFactory public tokenFactory = new TokenFactory();
+    TokenFactory public tokenFactoryImpl;
+    TokenFactory public tokenFactoryProxy;
     ERC1155Rails public erc1155Rails = new ERC1155Rails();
     RegistryExtension public registryExtension = new RegistryExtension();
     address payable token;
     address public caller = address(1);
-
+    address public fake = address(2);
+    bytes32 salt = 0x00000000;
 
     function setUp() public {
       vm.startPrank(caller);
+      tokenFactoryImpl = new TokenFactory();
+      tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
+      tokenFactoryProxy.initialize(caller, fake, fake, address(erc1155Rails));
+
       bytes memory addRegisterTraitExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector, IRegistryExtension.ext_registerTrait.selector, address(registryExtension)
       );
@@ -36,7 +44,7 @@ contract RegistryExtensionTest is Test {
       initCalls[1] = addGetImageDataExtension;
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
-      token = tokenFactory.createERC1155(payable(erc1155Rails), caller, "NPC Trait", "NPCT", initData);
+      token = tokenFactoryProxy.createERC1155(payable(erc1155Rails), salt, caller, "NPC Trait", "NPCT", initData);
       vm.stopPrank();
     }
 

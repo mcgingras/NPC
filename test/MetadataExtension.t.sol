@@ -12,6 +12,8 @@ import { MetadataExtension } from "../src/extensions/metadata/MetadataExtension.
 import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
+import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
+
 
 
 /// @title MetadataTest
@@ -20,22 +22,28 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 /// maybe should call the other contract "TBAMetadataExtension" or something
 contract MetadataTest is Test {
     address public caller = address(1);
+    address public fake = address(2);
     Easel public easel;
     MetadataExtension public metadataExtension;
-    TokenFactory public tokenFactory;
+    TokenFactory public tokenFactoryImpl;
+    TokenFactory public tokenFactoryProxy;
     ERC1155Rails public erc1155Rails;
     RegistryExtension public registryExtension;
     address payable erc1155tokenContract;
     address payable erc721tokenContract;
+    bytes32 salt = 0x00000000;
 
     string public expectedSVG = '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#d5d7e1" /><rect width="140" height="10" x="90" y="210" fill="#e9265c" /><rect width="140" height="10" x="90" y="220" fill="#e9265c" /><rect width="140" height="10" x="90" y="230" fill="#e9265c" /><rect width="140" height="10" x="90" y="240" fill="#e9265c" /><rect width="20" height="10" x="90" y="250" fill="#e9265c" /><rect width="110" height="10" x="120" y="250" fill="#e9265c" /><rect width="20" height="10" x="90" y="260" fill="#e9265c" /><rect width="110" height="10" x="120" y="260" fill="#e9265c" /><rect width="20" height="10" x="90" y="270" fill="#e9265c" /><rect width="110" height="10" x="120" y="270" fill="#e9265c" /><rect width="20" height="10" x="90" y="280" fill="#e9265c" /><rect width="110" height="10" x="120" y="280" fill="#e9265c" /><rect width="20" height="10" x="90" y="290" fill="#e9265c" /><rect width="110" height="10" x="120" y="290" fill="#e9265c" /><rect width="20" height="10" x="90" y="300" fill="#e9265c" /><rect width="110" height="10" x="120" y="300" fill="#e9265c" /><rect width="20" height="10" x="90" y="310" fill="#e9265c" /><rect width="110" height="10" x="120" y="310" fill="#e9265c" /></svg>';
 
     function setUp() public {
       easel = new Easel();
-      tokenFactory = new TokenFactory();
       erc1155Rails = new ERC1155Rails();
       registryExtension = new RegistryExtension();
       metadataExtension = new MetadataExtension(address(easel));
+
+      tokenFactoryImpl = new TokenFactory();
+      tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
+      tokenFactoryProxy.initialize(caller, fake, fake, address(erc1155Rails));
 
       erc1155tokenContract = this.deployTraitContract();
 
@@ -76,8 +84,9 @@ contract MetadataTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      address payable tokenContract = tokenFactory.createERC1155(
+      address payable tokenContract = tokenFactoryProxy.createERC1155(
         payable(erc1155Rails),
+        salt,
         caller,
         "NPC Trait",
         "NPCT",

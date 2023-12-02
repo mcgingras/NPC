@@ -6,6 +6,7 @@ import { ERC721Rails } from "0xrails/cores/ERC721/ERC721Rails.sol";
 import { ERC1155Rails } from "0xrails/cores/ERC1155/ERC1155Rails.sol";
 import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
 import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
+import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
@@ -23,17 +24,20 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 /// @notice Tests the 0xRails factory + custom metadata extensions for Noun Citizens.
 contract TokenMetadataExtensionTest is Test {
     address public caller = address(1);
+    address public fake = address(2);
     ERC6551Registry public registry;
     ERC6551Account public accountImpl;
     Easel public easel;
     TokenMetadataExtension public tokenMetadataExtension;
-    TokenFactory public tokenFactory;
+    TokenFactory public tokenFactoryImpl;
+    TokenFactory public tokenFactoryProxy;
     ERC721Rails public erc721Rails;
     ERC1155Rails public erc1155Rails;
     EquippableExtension public equippableExtension;
     RegistryExtension public registryExtension;
     address payable erc1155tokenContract;
     address payable erc721tokenContract;
+    bytes32 salt = 0x00000000;
 
     string emptySVG = '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#d5d7e1" /></svg>';
 
@@ -41,12 +45,14 @@ contract TokenMetadataExtensionTest is Test {
       registry = new ERC6551Registry();
       accountImpl = new ERC6551Account();
       easel = new Easel();
-      tokenFactory = new TokenFactory();
       erc721Rails = new ERC721Rails();
       erc1155Rails = new ERC1155Rails();
       equippableExtension = new EquippableExtension();
       registryExtension = new RegistryExtension();
       tokenMetadataExtension = new TokenMetadataExtension(address(easel), address(registry));
+      tokenFactoryImpl = new TokenFactory();
+      tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
+      tokenFactoryProxy.initialize(caller, fake, address(erc721Rails), address(erc1155Rails));
 
       erc1155tokenContract = this.deployTraitContract();
       erc721tokenContract = this.deployCitizenContract();
@@ -72,8 +78,9 @@ contract TokenMetadataExtensionTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      address payable tokenContract = tokenFactory.createERC721(
+      address payable tokenContract = tokenFactoryProxy.createERC721(
         payable(erc721Rails),
+        salt,
         caller,
         "Noun Citizens",
         "NPC",
@@ -111,8 +118,9 @@ contract TokenMetadataExtensionTest is Test {
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 
-      address payable tokenContract = tokenFactory.createERC1155(
+      address payable tokenContract = tokenFactoryProxy.createERC1155(
         payable(erc1155Rails),
+        salt,
         caller,
         "NPC Trait",
         "NPCT",
