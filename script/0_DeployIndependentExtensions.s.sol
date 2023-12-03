@@ -19,9 +19,9 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// address registryExtension = 0x33b34094E8349eC7514b4ECF757A0768566da133;
-/// address equippableExtension = 0x4893a84658f3eB0846547896816EA9623670e68f;
-/// address easel = 0x583CEF05cC41237f917a4D320032265B48fc0C55;
+/// address registryExtension = 0x26431F48C445A04bb526FE403247DEafb0006206;
+/// address equippableExtension = 0x46AE0962537593Ab92f5ec98D0D99bCE8f137de2;
+/// address easel = 0xB8e799e21BF8517e9FFE62370f3B1B102A507A7f;
 
 
 /// @notice Script for deploying the "independent" extensions -- aka the extensions that do not have any dependencies.

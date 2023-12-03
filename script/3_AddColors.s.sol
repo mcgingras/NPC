@@ -11,7 +11,7 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 // forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/3_AddColors.s.sol:Deploy
 
 contract Deploy is Script {
-    address public easel = 0x583CEF05cC41237f917a4D320032265B48fc0C55;
+    address public easel = 0xB8e799e21BF8517e9FFE62370f3B1B102A507A7f;
     string public file;
     uint8 paletteIndex = 0;
 

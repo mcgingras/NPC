@@ -33,8 +33,8 @@ import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtensio
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// NPC (721) = 0x28aAF781E430E5Ab48DDb44aEF0D621c0d0f0342
-/// Traits (1155) = 0x3f32E454D10dE67E8dc602bd7e2E4b670a509e20
+/// NPC (721) = 0x4dD30A31962431da2e7359de2527eeD09902B65F
+/// Traits (1155) = 0x34914c7c6Bd75c1C69e14F50CE5285c2F5335e5c
 
 interface ITokenFactory {
   function createERC721(
@@ -72,10 +72,10 @@ contract Deploy is Script {
     address erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
     address erc721Rails = 0xB5764bd3AD21A58f723DB04Aeb97a428c7bdDE2a;
     address erc1155Rails = 0x053809DFdd2443616d324c93e1DFC6a2076F976B;
-    address registryExtension = 0x33b34094E8349eC7514b4ECF757A0768566da133;
-    address equippableExtension = 0x4893a84658f3eB0846547896816EA9623670e68f;
-    address tokenMetadataExtension = 0xc9E847E3Cc5572Da9BB4f077811cB44323e99b2C;
-    address metadataExtension = 0x3EF1dAd6D56Bc83748E9139bc532c231d39D9E2f;
+    address registryExtension = 0x26431F48C445A04bb526FE403247DEafb0006206;
+    address equippableExtension = 0x46AE0962537593Ab92f5ec98D0D99bCE8f137de2;
+    address tokenMetadataExtension = 0x3613eCBdDf54710de21df9fD684B21f349E6AdC9;
+    address metadataExtension = 0xd3A8BB5A181993E869aC89bf6E66F68aEABDB7FF;
     bytes32 salt = 0x00000000;
 
     function deployCitizen721Contract() public returns (address payable) {

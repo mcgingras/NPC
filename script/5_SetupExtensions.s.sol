@@ -10,11 +10,11 @@ import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenM
 // forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/5_SetupExtensions.s.sol:Deploy
 
 contract Deploy is Script {
-    address public erc1155tokenContract = 0x3f32E454D10dE67E8dc602bd7e2E4b670a509e20;
-    address public npc721TokenContract = 0x28aAF781E430E5Ab48DDb44aEF0D621c0d0f0342;
+    address public erc1155tokenContract = 0x34914c7c6Bd75c1C69e14F50CE5285c2F5335e5c;
+    address public npc721TokenContract = 0x4dD30A31962431da2e7359de2527eeD09902B65F;
     address public erc6551Registry = 0x000000006551c19487814612e58FE06813775758;
     address public erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
-    address public easel = 0x583CEF05cC41237f917a4D320032265B48fc0C55;
+    address public easel = 0xB8e799e21BF8517e9FFE62370f3B1B102A507A7f;
 
     function run() public {
       vm.startBroadcast();

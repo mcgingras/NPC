@@ -17,7 +17,7 @@ import { ERC6551Registry } from "../../src/ERC6551Registry.sol";
 contract Deploy is Script {
     address public registry = 0x000000006551c19487814612e58FE06813775758;
     address public simpleAccountImplementation = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
-    address public NPC721 = 0x28aAF781E430E5Ab48DDb44aEF0D621c0d0f0342;
+    address public NPC721 = 0x4dD30A31962431da2e7359de2527eeD09902B65F;
     bytes32 public salt = bytes32(0);
     uint256 public chainId = 5;
     // UPDATE THIS WHEN YOU DEPLOY FOR NEW ACCOUNTS!
