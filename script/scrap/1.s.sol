@@ -6,6 +6,8 @@ import { IEquippableExtension } from "../../src/extensions/equippable/IEquippabl
 import { IRegistryExtension } from "../../src/extensions/registry/IRegistryExtension.sol";
 import { MultiPartRLEToSVG } from "../../src/lib/MultiPartRLEToSVG.sol";
 import { Easel } from "../../src/Easel.sol";
+import { MultiPartRLEToSVG } from "../../src/lib/MultiPartRLEToSVG.sol";
+
 
 
 /// -----------------
@@ -29,9 +31,11 @@ contract Deploy is Script {
           traitParts[i] = IRegistryExtension(traitContractAddress).ext_getImageDataForTrait(traitId);
         }
 
-        console2.log("traitParts", traitParts.length);
+        // console2.log(traitParts.length);
+        // console2.logBytes(traitParts[0]);
         string memory output = Easel(easel).generateSVGForParts(traitParts);
         console2.log(output);
+
 
         // vm.stopBroadcast();
     }

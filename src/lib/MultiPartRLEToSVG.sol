@@ -18,6 +18,9 @@
 
 pragma solidity ^0.8.6;
 
+import {Test, console2} from "forge-std/Test.sol";
+
+
 library MultiPartRLEToSVG {
     struct SVGParams {
         bytes[] parts;
@@ -80,6 +83,7 @@ library MultiPartRLEToSVG {
         string memory rects;
         for (uint8 p = 0; p < params.parts.length; p++) {
             DecodedImage memory image = _decodeRLEImage(params.parts[p]);
+            console2.log(image.paletteIndex);
             string[] storage palette = palettes[image.paletteIndex];
             uint256 currentX = image.bounds.left;
             uint256 currentY = image.bounds.top;

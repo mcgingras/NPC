@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.13;
 
+import {Test, console2} from "forge-std/Test.sol";
 import { MultiPartRLEToSVG } from "./lib/MultiPartRLEToSVG.sol";
 import {IEasel} from './interfaces/IEasel.sol';
 
@@ -15,6 +16,7 @@ contract Easel is IEasel {
      */
     function addManyColorsToPalette(uint8 paletteIndex, string[] calldata newColors) external {
         require(palettes[paletteIndex].length + newColors.length <= 256, 'Palettes can only hold 256 colors');
+        console2.log("length", newColors.length);
         for (uint256 i = 0; i < newColors.length; i++) {
             _addColorToPalette(paletteIndex, newColors[i]);
         }

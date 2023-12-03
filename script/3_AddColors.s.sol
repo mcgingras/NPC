@@ -16,7 +16,7 @@ contract Deploy is Script {
     uint8 paletteIndex = 0;
 
     function setUp() public {
-      file = readInput("image-data-v2");
+      file = readInput("image-data-v1");
     }
 
     function readInput(string memory input) view internal returns (string memory) {

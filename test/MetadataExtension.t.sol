@@ -354,7 +354,6 @@ contract MetadataTest is Test {
     function test_Complete() public {
       vm.startPrank(caller);
       uint256 tokenId1 = 1;
-      uint256 tokenId2 = 2;
 
       assertEq(ERC1155Rails(erc1155tokenContract).uri(tokenId1), expectedSVG);
       // assertEq(ERC721Rails(erc1155tokenContract).contractURI(), "TEMP_CONTRACT_URI");
