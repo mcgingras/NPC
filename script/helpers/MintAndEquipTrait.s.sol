@@ -13,9 +13,9 @@ import { IEquippableExtension } from "../../src/extensions/equippable/IEquippabl
 
 /// @notice Script for minting trait token and equipping it to a tba
 contract Deploy is Script {
-    address public Trait1155 = 0x4E2B820D5679CcfEAbe33Cf67872BCaE9df898dE;
+    address public Trait1155 = 0x3f32E454D10dE67E8dc602bd7e2E4b670a509e20;
     // UPDATE THIS WHEN YOU DEPLOY FOR NEW ACCOUNTS!
-    address public tbaAddress = 0xB55A435251992d8EDD70B6251b48dD3C1f03afC9;
+    address public tbaAddress = 0x1dcdbd35c21eB88172F154cad0100896e8B4327d;
     uint256 public tokenId = 1;
 
 

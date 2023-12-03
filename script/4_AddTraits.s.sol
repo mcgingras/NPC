@@ -10,7 +10,7 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 // forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/4_AddTraits.s.sol:Deploy
 
 contract Deploy is Script {
-    address public erc1155tokenContract = 0x4E2B820D5679CcfEAbe33Cf67872BCaE9df898dE;
+    address public erc1155tokenContract = 0x3f32E454D10dE67E8dc602bd7e2E4b670a509e20;
 
     struct Trait {
       bytes rleBytes;

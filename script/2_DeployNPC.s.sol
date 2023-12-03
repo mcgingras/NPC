@@ -12,7 +12,6 @@ import { IERC1155Rails } from "0xrails/cores/ERC1155/interface/IERC1155Rails.sol
 import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
 import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
 import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
@@ -34,8 +33,8 @@ import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtensio
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// NPC (721) = 0x30512C982e4461521E26812401C848b44d6cC36F
-/// Traits (1155) = 0x4E2B820D5679CcfEAbe33Cf67872BCaE9df898dE
+/// NPC (721) = 0x28aAF781E430E5Ab48DDb44aEF0D621c0d0f0342
+/// Traits (1155) = 0x3f32E454D10dE67E8dc602bd7e2E4b670a509e20
 
 interface ITokenFactory {
   function createERC721(
@@ -73,10 +72,10 @@ contract Deploy is Script {
     address erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
     address erc721Rails = 0xB5764bd3AD21A58f723DB04Aeb97a428c7bdDE2a;
     address erc1155Rails = 0x053809DFdd2443616d324c93e1DFC6a2076F976B;
-    address registryExtension = 0xDA206772674FDd37554B5B157168BA2CcA8D1bB2;
-    address equippableExtension = 0x31Ad4E29Eb81aC275bD6B61cbeA417ffF7d81F76;
-    address tokenMetadataExtension = 0x3A55ccb904a9AdA4dE1a9332993C5918B7845050;
-    address metadataExtension = 0xc02745dB005ad04304C2058ecB0f5db74Cb12A32;
+    address registryExtension = 0x33b34094E8349eC7514b4ECF757A0768566da133;
+    address equippableExtension = 0x4893a84658f3eB0846547896816EA9623670e68f;
+    address tokenMetadataExtension = 0xc9E847E3Cc5572Da9BB4f077811cB44323e99b2C;
+    address metadataExtension = 0x3EF1dAd6D56Bc83748E9139bc532c231d39D9E2f;
     bytes32 salt = 0x00000000;
 
     function deployCitizen721Contract() public returns (address payable) {

@@ -39,7 +39,7 @@ contract TokenMetadataExtensionTest is Test {
     address payable erc721tokenContract;
     bytes32 salt = 0x00000000;
 
-    string emptySVG = '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#d5d7e1" /></svg>';
+    string emptySVG = 'data:application/json;base64,eyJuYW1lIjogIk5QQyAjMCIsICJkZXNjcmlwdGlvbiI6ICJOb3VuIFBsYXlhYmxlIENoYXJhY3RlciIsICJpbWFnZSI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUIzYVdSMGFEMGlNekl3SWlCb1pXbG5hSFE5SWpNeU1DSWdkbWxsZDBKdmVEMGlNQ0F3SURNeU1DQXpNakFpSUhodGJHNXpQU0pvZEhSd09pOHZkM2QzTG5jekxtOXlaeTh5TURBd0wzTjJaeUlnYzJoaGNHVXRjbVZ1WkdWeWFXNW5QU0pqY21semNFVmtaMlZ6SWo0OGNtVmpkQ0IzYVdSMGFEMGlNVEF3SlNJZ2FHVnBaMmgwUFNJeE1EQWxJaUJtYVd4c1BTSWpaRFZrTjJVeElpQXZQand2YzNablBnPT0ifQ==';
 
     function setUp() public {
       registry = new ERC6551Registry();

@@ -7,9 +7,13 @@ import { Easel } from "../../Easel.sol";
 import { IERC6551Registry } from "../../ERC6551Registry.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
 import { IEquippableExtension } from "../../extensions/equippable/IEquippableExtension.sol";
+import "openzeppelin-contracts/utils/Base64.sol";
+import "openzeppelin-contracts/utils/Strings.sol";
 
 
 contract TokenMetadataExtension is Extension {
+    using Strings for uint256;
+
     constructor(address _easel, address _erc6551Registry) Extension() {
         TokenMetadataExtensionData.layout().easel = _easel;
         TokenMetadataExtensionData.layout().erc6551Registry = _erc6551Registry;
@@ -84,6 +88,10 @@ contract TokenMetadataExtension is Extension {
           traitParts[i] = IRegistryExtension(account.traitContractAddress).ext_getImageDataForTrait(traitId);
       }
 
-      return Easel(easel).generateSVGForParts(traitParts);
+      string memory output = string(Easel(easel).generateSVGForParts(traitParts));
+      string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "NPC #', tokenId.toString(), '", "description": "Noun Playable Character", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
+      output = string(abi.encodePacked('data:application/json;base64,', json));
+
+      return output;
     }
 }

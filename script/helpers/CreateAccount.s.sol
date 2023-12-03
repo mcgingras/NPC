@@ -10,14 +10,14 @@ import { ERC6551Registry } from "../../src/ERC6551Registry.sol";
 // forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/helpers/CreateAccount.s.sol:Deploy
 
 /// tba - tokenId
-/// 0xB55A435251992d8EDD70B6251b48dD3C1f03afC9 - 1
+/// 0x1dcdbd35c21eB88172F154cad0100896e8B4327d - 1
 
 
 /// @notice Script for creating 6551 accounts
 contract Deploy is Script {
     address public registry = 0x000000006551c19487814612e58FE06813775758;
     address public simpleAccountImplementation = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
-    address public NPC721 = 0x30512C982e4461521E26812401C848b44d6cC36F;
+    address public NPC721 = 0x28aAF781E430E5Ab48DDb44aEF0D621c0d0f0342;
     bytes32 public salt = bytes32(0);
     uint256 public chainId = 5;
     // UPDATE THIS WHEN YOU DEPLOY FOR NEW ACCOUNTS!
