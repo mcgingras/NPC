@@ -10,3 +10,6 @@
 [submodule "lib/groupos"]
 	path = lib/groupos
 	url = https://github.com/0xStation/groupos
+[submodule "lib/nouns-monorepo"]
+	path = lib/nouns-monorepo
+	url = https://github.com/nounsDAO/nouns-monorepo
