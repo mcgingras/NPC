@@ -6,7 +6,7 @@ import { Extension } from "0xrails/extension/Extension.sol";
 import { RegistryExtensionData } from "./RegistryExtensionData.sol";
 
 contract RegistryExtension is Extension {
-    event TraitRegistered(uint256 traitId, string name, bytes rleBytes);
+    event TraitRegistered(uint256 traitId, bytes rleBytes, string name);
 
     constructor() Extension() {
 
@@ -47,7 +47,7 @@ contract RegistryExtension is Extension {
       });
 
       RegistryExtensionData.layout().traitIdCount = newTraitIdCount;
-      emit TraitRegistered(newTraitIdCount, name, rleBytes);
+      emit TraitRegistered(newTraitIdCount, rleBytes, name);
     }
 
     function ext_getImageDataForTrait(uint256 traitId) public view returns (bytes memory) {

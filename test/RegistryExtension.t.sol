@@ -15,7 +15,7 @@ import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.so
 /// @title RegistryExtensionTest
 /// @author frog @0xmcg
 /// @notice Tests for TraitRegistry contract.
-contract RegistryExtensionTest is Test {
+contract RegistryExtensionTest is Test, RegistryExtension {
     TokenFactory public tokenFactoryImpl;
     TokenFactory public tokenFactoryProxy;
     ERC1155Rails public erc1155Rails = new ERC1155Rails();
@@ -57,5 +57,12 @@ contract RegistryExtensionTest is Test {
       vm.stopPrank();
     }
 
-
+    function test_registerEmitsEvent() public {
+      vm.startPrank(caller);
+        bytes memory rleBytes = abi.encodePacked(uint8(1), uint8(2), uint8(3));
+        vm.expectEmit(true, true, true, true);
+        emit TraitRegistered(1, rleBytes, "red glasses");
+        IRegistryExtension(token).ext_registerTrait(rleBytes, "red glasses");
+      vm.stopPrank();
+    }
 }
