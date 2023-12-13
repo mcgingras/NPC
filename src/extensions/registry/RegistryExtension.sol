@@ -38,6 +38,7 @@ contract RegistryExtension is Extension {
 
     /// @dev traitId index starts at 1, not 0
     /// If we decide to change this -- make sure to update test too :)
+    /// Todo add an event to emit new register
     function ext_registerTrait(bytes memory rleBytes, string memory name) public {
       uint256 currentTraitIdCount = RegistryExtensionData.layout().traitIdCount;
       uint256 newTraitIdCount = currentTraitIdCount + 1;

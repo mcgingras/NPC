@@ -2,6 +2,7 @@
 
 ### Todo
 
+- [] events
 - [] mint module
 - [] fees + payment split (can we just use fee manager from rails this?)
 - https://github.com/0xStation/groupos/blob/e94b09e63f422e14e066066424c2320be2b127c7/src/membership/modules/StablecoinPurchaseController.sol#L79 (fee)
