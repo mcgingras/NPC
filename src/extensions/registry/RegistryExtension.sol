@@ -6,8 +6,7 @@ import { Extension } from "0xrails/extension/Extension.sol";
 import { RegistryExtensionData } from "./RegistryExtensionData.sol";
 
 contract RegistryExtension is Extension {
-    // can we put events in extensions?
-    event TraitRegistered(uint256 traitId);
+    event TraitRegistered(uint256 traitId, string name, bytes rleBytes);
 
     constructor() Extension() {
 
@@ -48,7 +47,7 @@ contract RegistryExtension is Extension {
       });
 
       RegistryExtensionData.layout().traitIdCount = newTraitIdCount;
-      emit TraitRegistered(newTraitIdCount);
+      emit TraitRegistered(newTraitIdCount, name, rleBytes);
     }
 
     function ext_getImageDataForTrait(uint256 traitId) public view returns (bytes memory) {

@@ -6,7 +6,9 @@ import { Extension } from "0xrails/extension/Extension.sol";
 import { EquippableExtensionData } from "./EquippableExtensionData.sol";
 
 contract EquippableExtension is Extension {
-    // not sure if this is going to cause a storage collision
+    event TokenEquipped(uint256 indexed tokenId);
+    event TokenUnequipped(uint256 indexed tokenId);
+
     uint256 constant SENTINEL_TOKEN_ID = 0;
 
     constructor() Extension() {}
@@ -43,6 +45,7 @@ contract EquippableExtension is Extension {
         }
     }
 
+    // this function is hard to work with because of the events
     function ext_setupEquipped(address owner, uint256[] memory _tokenIds) public {
       uint256 currentTokenId = SENTINEL_TOKEN_ID;
 
@@ -85,6 +88,8 @@ contract EquippableExtension is Extension {
       EquippableExtensionData.layout()._equippedByOwner[owner][precedingTokenId] = tokenId;
       EquippableExtensionData.layout()._equippedByOwner[owner][tokenId] = precedingTokenIdNext;
       EquippableExtensionData.layout()._counts[owner]++;
+
+      emit TokenEquipped(tokenId);
     }
 
     function ext_removeTokenId(address owner, uint256 tokenId) public {
@@ -101,11 +106,14 @@ contract EquippableExtension is Extension {
           if (nextTokenId == tokenId) {
               EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = EquippableExtensionData.layout()._equippedByOwner[owner][nextTokenId];
               EquippableExtensionData.layout()._counts[owner]--;
+              emit TokenUnequipped(tokenId);
               return;
           }
           currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId];
           nextTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][nextTokenId];
       }
+
+      revert("Token not found.");
     }
 
     function ext_getEquippedTokenIds(address owner) public view returns (uint256[] memory) {
