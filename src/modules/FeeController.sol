@@ -25,7 +25,6 @@ abstract contract FeeController is Ownable {
 
     event FeePaid(
         address indexed collection,
-        address indexed buyer,
         uint256 unitPrice,
         uint256 quantity,
         uint256 totalFee
@@ -111,12 +110,10 @@ abstract contract FeeController is Ownable {
     /// @dev Function to collect fees for owner and collection
     /// @dev Called only by child contracts inheriting this one
     /// @param collection The token collection to mint from
-    /// @param recipient The recipient of successfully minted tokens
     /// @param quantity The number of items being minted, used to calculate the total fee payment required
     /// @param unitPrice The price per token to mint
     function _collectFeeAndForwardCollectionRevenue(
         address collection,
-        address recipient,
         uint256 quantity,
         uint256 unitPrice
     ) internal returns (uint256 paidFee) {
@@ -134,6 +131,6 @@ abstract contract FeeController is Ownable {
         }
 
         // emit event for accounting
-        emit FeePaid(collection, recipient, unitPrice, quantity, paidFee);
+        emit FeePaid(collection, unitPrice, quantity, paidFee);
     }
 }

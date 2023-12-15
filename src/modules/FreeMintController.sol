@@ -49,8 +49,13 @@ contract FreeMintController is FeeController {
         INTERNALS
     ===============*/
 
-
+    /// @dev Internal function to which all external user + client facing batchMint functions are routed.
+    /// @param collection The token collection to mint from
+    /// @param recipient The recipient of successfully minted tokens
+    /// @param tokenId Token id to mint
+    /// @param amount Amount of token id to mint
     function _mint(address collection, address recipient, uint256 tokenId, uint256 amount) internal {
+       _collectFeeAndForwardCollectionRevenue(collection, 1, 0);
        IERC1155Rails(collection).mintTo(recipient, tokenId, amount);
     }
 
@@ -68,7 +73,7 @@ contract FreeMintController is FeeController {
 
         // calculate fee, require fee sent to this contract, transfer collection's revenue to payoutAddress
         // for free mints there is no payoutAddress && payment token is network token
-        _collectFeeAndForwardCollectionRevenue(collection, recipient, quantity, 0);
+        _collectFeeAndForwardCollectionRevenue(collection, quantity, 0);
 
         // Mint NFTs
         for (uint256 i; i < tokenIds.length; ++i) {
