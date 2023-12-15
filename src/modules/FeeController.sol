@@ -119,7 +119,7 @@ abstract contract FeeController is Ownable {
     ) internal returns (uint256 paidFee) {
         // feeTotal is handled as ETH
         paidFee = FeeManager(feeManager).getFeeTotals(collection);
-        uint256 total = quantity * unitPrice + paidFee;
+        uint256 total = (quantity * unitPrice) + (paidFee * quantity);
 
         // collect fees- baseFee is still applied in FreeMintController context
         if (msg.value != total) revert InvalidFee(total, msg.value);

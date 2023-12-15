@@ -104,4 +104,32 @@ contract FreeMintControllerTest is Test {
       assertEq(address(feeRecipient2).balance, .0005 ether);
       vm.stopPrank();
     }
+
+    function test_withdrawFeesNotOwner() public {
+      vm.startPrank(address(2));
+      vm.expectRevert();
+      freeMintController.withdrawFees();
+      vm.stopPrank();
+    }
+
+    function test_mintBatch() public {
+      vm.startPrank(caller);
+      // add mint controller and mint
+      bytes8 mintPermission = hex"38381131ea27ecba";
+      IPermissions(tokenContract).addPermission(mintPermission, address(freeMintController));
+      vm.deal(caller, 1 ether);
+      uint256[] memory tokenIds = new uint256[](2);
+      tokenIds[0] = 1;
+      tokenIds[1] = 2;
+      uint256[] memory amounts = new uint256[](2);
+      amounts[0] = 1;
+      amounts[1] = 1;
+      // too low of fee for two mints
+      vm.expectRevert();
+      freeMintController.batchMintTo{value: .001 ether}(address(tokenContract), caller, tokenIds, amounts);
+      freeMintController.batchMintTo{value: .002 ether}(address(tokenContract), caller, tokenIds, amounts);
+      assertEq(IERC1155(tokenContract).balanceOf(caller, 1), 1);
+      assertEq(IERC1155(tokenContract).balanceOf(caller, 2), 1);
+      vm.stopPrank();
+    }
 }
