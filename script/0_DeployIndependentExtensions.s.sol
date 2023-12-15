@@ -3,7 +3,6 @@ pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
 import { Easel } from "../src/Easel.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 
@@ -19,9 +18,9 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// address registryExtension = 0x26431F48C445A04bb526FE403247DEafb0006206;
-/// address equippableExtension = 0x46AE0962537593Ab92f5ec98D0D99bCE8f137de2;
-/// address easel = 0xB8e799e21BF8517e9FFE62370f3B1B102A507A7f;
+/// address registryExtension = 0x30E10657bb6F4D7E9069C402744462901583B7F6;
+/// address equippableExtension = 0xfE803c0228fd503C31c7Cb7f8d5E91af55804f3f;
+/// address easel = 0x08698193B4581d39D8B8d955D7703d14Ef86c458;
 
 
 /// @notice Script for deploying the "independent" extensions -- aka the extensions that do not have any dependencies.

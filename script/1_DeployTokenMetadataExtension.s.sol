@@ -19,13 +19,13 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// address tokenMetadataExtension = 0x3613eCBdDf54710de21df9fD684B21f349E6AdC9;
-/// address metadataExtension = 0xd3A8BB5A181993E869aC89bf6E66F68aEABDB7FF;
+/// address tokenMetadataExtension = 0x98B4754f8266274ed4Ea80B440f075e76d18Ac89;
+/// address metadataExtension = 0x9E49D7F5b41F6a8CD59eeeD49fd06fD9F6eEc5d9;
 
 contract Deploy is Script {
     function run() public {
         vm.startBroadcast();
-        address easel = 0xB8e799e21BF8517e9FFE62370f3B1B102A507A7f;
+        address easel = 0x08698193B4581d39D8B8d955D7703d14Ef86c458;
         address erc6551Registry = 0x000000006551c19487814612e58FE06813775758;
         TokenMetadataExtension tokenMetadataExtension = new TokenMetadataExtension(easel, erc6551Registry);
         MetadataExtension metadataExtension = new MetadataExtension(address(easel));
