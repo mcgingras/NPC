@@ -95,11 +95,7 @@ contract FeeManager is Ownable {
 
     /// @dev Function to get collection fees
     /// @param collection The collection whose fees will be read, including checks for client-specific fee discounts
-    /// @param /*recipient*/ The address to mint to. Included to support future discounts on a per user basis
-    function getFeeTotals(
-        address collection,
-        address /*recipient*/
-    ) external view returns (uint256 feeTotal) {
+    function getFeeTotals(address collection) external view returns (uint256 feeTotal) {
         // get existing fees, first checking for override fees or discounts if they have already been set
         Fees memory fees = getFees(collection);
         return fees.baseFee;
