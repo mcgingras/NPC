@@ -6,8 +6,8 @@ import { Extension } from "0xrails/extension/Extension.sol";
 import { EquippableExtensionData } from "./EquippableExtensionData.sol";
 
 contract EquippableExtension is Extension {
-    event TokenEquipped(uint256 indexed tokenId);
-    event TokenUnequipped(uint256 indexed tokenId);
+    event TokenEquipped(uint256 indexed tokenId, address indexed owner);
+    event TokenUnequipped(uint256 indexed tokenId, address indexed owner);
 
     uint256 constant SENTINEL_TOKEN_ID = 0;
 
@@ -89,7 +89,7 @@ contract EquippableExtension is Extension {
       EquippableExtensionData.layout()._equippedByOwner[owner][tokenId] = precedingTokenIdNext;
       EquippableExtensionData.layout()._counts[owner]++;
 
-      emit TokenEquipped(tokenId);
+      emit TokenEquipped(tokenId, owner);
     }
 
     function ext_removeTokenId(address owner, uint256 tokenId) public {
@@ -106,7 +106,7 @@ contract EquippableExtension is Extension {
           if (nextTokenId == tokenId) {
               EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId] = EquippableExtensionData.layout()._equippedByOwner[owner][nextTokenId];
               EquippableExtensionData.layout()._counts[owner]--;
-              emit TokenUnequipped(tokenId);
+              emit TokenUnequipped(tokenId, owner);
               return;
           }
           currentTokenId = EquippableExtensionData.layout()._equippedByOwner[owner][currentTokenId];
