@@ -1,4 +1,4 @@
 erc6551/=lib/erc6551/src/
 0xrails/=lib/0xrails/src/
-groupos/=lib/groupos/src/
+groupos/=lib/0xrails-periphery/src/
 openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/
