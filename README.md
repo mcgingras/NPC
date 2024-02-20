@@ -5,6 +5,43 @@
 - [] possibly add the more elaborate "mint module per tokenId" controller?
 - [] traits as "trait" of NPC (tokenURI details)
 
+## First time local setup
+
+### 1. Install geth
+
+`geth` is the official implementation of an Ethereum node in Golang. Follow installation instructions [here](https://geth.ethereum.org/docs/install-and-build/installing-geth). We primarily use geth for its wallet functionality to store private keys locally to use in dapptools/foundry.
+
+### 2. Create/Import Private Key
+
+You can use `geth account new` to generate a new private key & public address to use for development, or you can copy a private key from one of your personal wallets and use `geth account import`.
+
+Use `geth account list` to view your list of hosted private keys.
+
+### 3. Env Variables
+
+```
+ETH_FROM=
+ETH_KEYSTORE=
+KEYSTORE_PASSWORD=
+ALCHEMY_API_KEY=
+SEPOLIA_RPC_URL=https://eth-goerli.alchemyapi.io/v2/$ALCHEMY_API_KEY
+MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/$ALCHEMY_API_KEY
+```
+
+**3a. Account Setup**
+
+After creating or importing a wallet, use `geth account list` to view the "keystore" files on your computer. Choose the wallet you'd like to use for development by saving environment variables for the public address as `ETH_FROM` and the keystore file path as `ETH_KEYSTORE`. For example: `ETH_FROM=0x7ff6363cd3a4e7f9ece98d78dd3c862bace2163d` and `ETH_KEYSTORE=/Users/demo-user/Library/Ethereum/keystore/UTC--2021-11-16T09-41-57.123259000Z--7ff6363cd3a4e7f9ece98d78dd3c862bace2163d`.
+
+Additionally, save the local password you made for this keystore as `KEYSTORE_PASSWORD`.
+
+**3b. RPC Setup**
+
+Next, get an `ALCHEMY_API_KEY` from the Alchemy dashboard. Infura works too, but you'll have to update .env file.
+
+### 4. Install Foundry
+
+- [Foundry](https://github.com/foundry-rs/foundry#installation) -> provides the `forge`, `cast`, and `anvil` CLIs.
+
 ### Installation
 
 1. `forge i`
