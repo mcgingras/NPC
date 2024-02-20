@@ -5,6 +5,11 @@
 - [] possibly add the more elaborate "mint module per tokenId" controller?
 - [] traits as "trait" of NPC (tokenURI details)
 
+### Installation
+
+1. `forge i`
+2. `forge c`
+
 ### Manual deployments steps
 
 1. Run through scripts 0-5 in `/script` to deploy (skip if already deployed)
