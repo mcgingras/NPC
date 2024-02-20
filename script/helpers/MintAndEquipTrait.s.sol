@@ -8,7 +8,7 @@ import { IEquippableExtension } from "../../src/extensions/equippable/IEquippabl
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/helpers/MintAndEquipTrait.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/helpers/MintAndEquipTrait.s.sol:Deploy
 
 
 /// @notice Script for minting trait token and equipping it to a tba

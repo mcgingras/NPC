@@ -8,10 +8,10 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/3_AddColors.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/3_AddColors.s.sol:Deploy
 
 contract Deploy is Script {
-    address public easel = 0xA074f5520B8A40A85c49f9EAA5B66915F89892db;
+    address public easel = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
     string public file;
     uint8 paletteIndex = 0;
 

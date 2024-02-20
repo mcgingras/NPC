@@ -26,15 +26,15 @@ import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtensio
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $GOERLI_RPC_URL script/2_DeployNPC.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/2_DeployNPC.s.sol:Deploy
 // forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xb7539fbfcbe9e64e85ea865980cd47e0962aae6d src/Character.sol:Character
 
 
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// NPC (721) = 0xC2c16A16Bcb774663a84C44a960693E73F273617
-/// Traits (1155) = 0x810cdD881Db44eE29747CB44516fD69185e02b2F
+/// NPC (721) = 0xF1eFc9e4C5238C5bCf3d30774480325893435a2A
+/// Traits (1155) = 0x8F071320A60E4Aac7dA5FBA5F201F9bcc66f86e9
 
 interface ITokenFactory {
   function createERC721(
@@ -60,11 +60,11 @@ contract Deploy is Script {
     /*============
         CONFIG
     ============*/
-    address public deployer = 0xE7affDB964178261Df49B86BFdBA78E9d768Db6D;
+    address public deployer = 0xfC29eDCe481c4D7D2CDa4c0Ad6bF6C5Fcf128704;
     string public name = "Noun Citizens";
     string public symbol = "NPC";
 
-    /// @notice GOERLI: v1.0.0
+    /// @notice SEPOLIA: v1.0.0
     /// @notice Tokenbound v0.3.1
     address tokenFactory = 0x2C333bd1316cE1aF9EBF017a595D6f8AB5f6BD1A;
     address erc6551Registry = 0x000000006551c19487814612e58FE06813775758;
@@ -72,10 +72,10 @@ contract Deploy is Script {
     address erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
     address erc721Rails = 0xB5764bd3AD21A58f723DB04Aeb97a428c7bdDE2a;
     address erc1155Rails = 0x053809DFdd2443616d324c93e1DFC6a2076F976B;
-    address registryExtension = 0x8c3Ef0d04395861c31C2Fc2EE4c7F9bc9BE319B4;
-    address equippableExtension = 0x5924b8fC00b388BC1D6B4a4091253ec517e783b3;
-    address tokenMetadataExtension = 0xE4AbEdA33F1B040AAd17Babd8dC9Ab6eB686AD58;
-    address metadataExtension = 0x3cA34E441F12c914f7B29A3F60604DBE410EC58f;
+    address registryExtension = 0x65b6e79D72bB53969a58Ac28Aaa32BA2cF6A6Ae2;
+    address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
+    address tokenMetadataExtension = 0x717d8876a2DD3e46f88FD2128e50F952C8937f9a;
+    address metadataExtension = 0xceEaeC9dC4055e05C7A9E7B7A72e556Eb7456CB4;
     address frog = 0x65A3870F48B5237f27f674Ec42eA1E017E111D63;
     address martin = 0x55045DA52be49461aF91a235E4303D4a9B2312AE;
     bytes32 salt = 0x00000000;
