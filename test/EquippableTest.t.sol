@@ -17,6 +17,9 @@ import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.so
 /// @author frog @0xmcg
 /// @notice Tests behavior of the equippable extension
 contract EquippableExtensionTest is Test {
+    event TokenEquipped(uint256 indexed tokenId, address indexed owner);
+    event TokenUnequipped(uint256 indexed tokenId, address indexed owner);
+
     address public caller = address(1);
     address public fake = address(2);
     EquippableExtension public equippableExtension = new EquippableExtension();
@@ -125,6 +128,21 @@ contract EquippableExtensionTest is Test {
       assertEq(IEquippableExtension(token).ext_getEquippedTokenIds(caller)[1], 3);
       vm.stopPrank();
     }
+
+    function test_EmitsEvent() public {
+      vm.startPrank(caller);
+      IERC1155Rails(token).mintTo(caller, 1, 1);
+
+      vm.expectEmit(true, true, true, true);
+      emit TokenEquipped(1, caller);
+      IEquippableExtension(token).ext_addTokenId(caller, 1, 0);
+
+      vm.expectEmit(true, true, true, true);
+      emit TokenUnequipped(1, caller);
+      IEquippableExtension(token).ext_removeTokenId(caller, 1);
+      vm.stopPrank();
+    }
+
 
     // possibly deprecating this...
     // function test_SetupEquipped() public {

@@ -99,6 +99,7 @@ contract EquippableExtension is Extension {
       if (currentTokenId == tokenId) {
           EquippableExtensionData.layout()._equippedByOwner[owner][SENTINEL_TOKEN_ID] = nextTokenId;
           EquippableExtensionData.layout()._counts[owner]--;
+          emit TokenUnequipped(tokenId, owner);
           return;
       }
 
