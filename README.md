@@ -4,6 +4,8 @@
 
 - [] possibly add the more elaborate "mint module per tokenId" controller?
 - [] traits as "trait" of NPC (tokenURI details)
+- [] make sure equippable extension is easy to use (might need to improve equipping multiple at once, or what happens with multicall)
+- [] make it easy to mint base NFT + deploy 6551 account + possibly mint traits all in one tx? (onboarding UX)
 
 ## First time local setup
 
@@ -62,4 +64,8 @@ OxRails core contracts inherit `extension` which offers us a way to register ext
 
 ### Guards
 
+Guards protect certain types of transactions. For example, we can add a tranfer guard to add extra logic to occur before or after a transfer.
+
 ### Modules
+
+Modules can be enabled with certain permissions. For example, we can have a minting module which has mint permission on a given token contract. The module has permission to mint, so we can add logic to the module such that people can mint through the module (conditional on the logic applying to them). Modules are flexible and can be added / removed. Examples of modules might be requiring a certain amount of ETH payment before minting. Or only allowing minting during a certain time frame.
