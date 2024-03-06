@@ -66,7 +66,9 @@ contract EquipGuardTest is Test {
       vm.stopPrank();
     }
 
-    // 0x5cc15eb80ba37777 -> transfer
+    /// @notice Test that the guard is set
+    /// This means that the guard is set on the transfer tx type
+    /// @dev 0x5cc15eb80ba37777 -> transfer
     function test_setGuardSanityCheck() public {
       vm.startPrank(caller);
       ERC1155Rails(token).setGuard(hex"5cc15eb80ba37777", address(equipGuard));
@@ -74,14 +76,22 @@ contract EquipGuardTest is Test {
       vm.stopPrank();
     }
 
+    /// @notice
+    /// The transfer should work fine because the token is not equipped
+    /// The transfer guard only prevents transfers of an equipped token
     function test_transferNotBlockedBecauseTokenNotEquipped() public {
       vm.startPrank(caller);
       ERC1155Rails(token).setGuard(hex"5cc15eb80ba37777", address(equipGuard));
       ERC1155Rails(token).mintTo(caller, 1, 1);
       ERC1155Rails(token).safeTransferFrom(caller, recipient, 1, 1, "");
+
+      assertEq(ERC1155Rails(token).balanceOf(caller, 1), 0);
+      assertEq(ERC1155Rails(token).balanceOf(recipient, 1), 1);
       vm.stopPrank();
     }
 
+    /// @notice
+    /// The transfer should be blocked because the token is equipped
     function test_transferBlockedBecauseTokenIsEquipped() public {
       vm.startPrank(caller);
       ERC1155Rails(token).setGuard(hex"5cc15eb80ba37777", address(equipGuard));
@@ -91,5 +101,20 @@ contract EquipGuardTest is Test {
       vm.expectRevert("Cannot transfer equipped token.");
       ERC1155Rails(token).safeTransferFrom(caller, recipient, 1, 1, "");
       vm.stopPrank();
+    }
+
+    /// @notice
+    /// If the user has > 1 of the same token, the transfer should not be blocked
+    /// You should be able to transfer n-1 of your n tokens (so you have 1 left to be equipped)
+    function test_transferNotBlockedBecauseMoreThan1TokenOwned() public {
+        vm.startPrank(caller);
+        ERC1155Rails(token).setGuard(hex"5cc15eb80ba37777", address(equipGuard));
+        ERC1155Rails(token).mintTo(caller, 1, 2);
+        IEquippableExtension(token).ext_addTokenId(caller, 1, 0);
+        ERC1155Rails(token).safeTransferFrom(caller, recipient, 1, 1, "");
+
+        assertEq(ERC1155Rails(token).balanceOf(caller, 1), 1);
+        assertEq(ERC1155Rails(token).balanceOf(recipient, 1), 1);
+        vm.stopPrank();
     }
 }

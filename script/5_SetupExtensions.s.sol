@@ -26,6 +26,8 @@ contract Deploy is Script {
         block.chainid,
         bytes32(0)
       );
+      // TODO: --
+      // add transfer guard to the 1155
       vm.stopBroadcast();
     }
 }

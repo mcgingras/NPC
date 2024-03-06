@@ -13,16 +13,34 @@ import { IEquippableExtension } from "../../src/extensions/equippable/IEquippabl
 
 /// @notice Script for minting trait token and equipping it to a tba
 contract Deploy is Script {
-    address public Trait1155 = 0x34914c7c6Bd75c1C69e14F50CE5285c2F5335e5c;
+    address public Trait1155 = 0x8F071320A60E4Aac7dA5FBA5F201F9bcc66f86e9;
     // UPDATE THIS WHEN YOU DEPLOY FOR NEW ACCOUNTS!
-    address public tbaAddress = 0x77F19999120B87b2254b4C31D4d2A12833dCA390;
-    uint256 public tokenId = 1;
+    address public tbaAddress = 0x35F8f5f92D4B51cc31e2E8b83e0C5393Ef1be274;
+    uint256 public bodyTokenId = 1;
+    uint256 public accessoryTokenId = 40;
+    uint256 public headTokenId = 50;
+    uint256 public glassesTokenId = 60;
 
 
     function run() public {
         vm.startBroadcast();
-        IERC1155Rails(Trait1155).mintTo(tbaAddress, tokenId, 1);
-        IEquippableExtension(Trait1155).ext_addTokenId(tbaAddress, tokenId, 0);
+        // mints a body
+        // IERC1155Rails(Trait1155).mintTo(tbaAddress, bodyTokenId, 1);
+        // IEquippableExtension(Trait1155).ext_addTokenId(tbaAddress, bodyTokenId, 0);
+
+        // mints a chain
+        // IERC1155Rails(Trait1155).mintTo(tbaAddress, accessoryTokenId, 1);
+        // IEquippableExtension(Trait1155).ext_addTokenId(tbaAddress, accessoryTokenId, bodyTokenId);
+
+        // mints a head
+        // IERC1155Rails(Trait1155).mintTo(tbaAddress, headTokenId, 1);
+        // IEquippableExtension(Trait1155).ext_addTokenId(tbaAddress, headTokenId, accessoryTokenId);
+
+        // mints glasses
+        // IERC1155Rails(Trait1155).mintTo(tbaAddress, glassesTokenId, 1);
+        // IEquippableExtension(Trait1155).ext_addTokenId(tbaAddress, glassesTokenId, headTokenId);
+
+        IEquippableExtension(Trait1155).ext_removeTokenId(tbaAddress, glassesTokenId);
         vm.stopBroadcast();
     }
 }

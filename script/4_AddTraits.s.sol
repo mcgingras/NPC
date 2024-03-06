@@ -37,7 +37,9 @@ contract Deploy is Script {
 
     function addTraitsToRegistry(string memory path) public {
       Trait[] memory decode = decodeImageType(path);
-      for (uint256 i = 0; i < decode.length; i++) {
+      uint256 limit = 10;
+    //   decode.length
+      for (uint256 i = 0; i < limit; i++) {
         Trait memory trait = decode[i];
         IRegistryExtension(erc1155tokenContract).ext_registerTrait(trait.rleBytes, trait.filename);
       }
@@ -46,10 +48,10 @@ contract Deploy is Script {
     function run() public {
       vm.startBroadcast();
       // It helps if you comment these out and do them 1 at a time
-      addTraitsToRegistry(".images.bodies");
-      // addTraitsToRegistry(".images.accessories");
-      // addTraitsToRegistry(".images.heads");
-      // addTraitsToRegistry(".images.glasses");
+    //   addTraitsToRegistry(".images.bodies");
+    //   addTraitsToRegistry(".images.accessories");
+    //   addTraitsToRegistry(".images.heads");
+      addTraitsToRegistry(".images.glasses");
       vm.stopBroadcast();
     }
 }
