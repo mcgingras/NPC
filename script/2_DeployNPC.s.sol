@@ -14,14 +14,14 @@ import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
+import { BaseMetadataExtension } from "../src/extensions/baseMetadata/BaseMetadataExtension.sol";
+import { IBaseMetadataExtension } from "../src/extensions/baseMetadata/IBaseMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
-import { MetadataExtension } from "../src/extensions/metadata/MetadataExtension.sol";
-import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtension.sol";
+import { TraitMetadataExtension } from "../src/extensions/traitMetadata/TraitMetadataExtension.sol";
+import { ITraitMetadataExtension } from "../src/extensions/traitMetadata/ITraitMetadataExtension.sol";
 
 /// -----------------
 /// SCRIPTS
@@ -34,7 +34,7 @@ import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtensio
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
 /// NPC (721) = 0xF1eFc9e4C5238C5bCf3d30774480325893435a2A
-/// Traits (1155) = 0x8F071320A60E4Aac7dA5FBA5F201F9bcc66f86e9
+/// Traits (1155) = 0x9A349CF5F69c12423111b729564D43022eC875F1
 
 interface ITokenFactory {
   function createERC721(
@@ -74,8 +74,8 @@ contract Deploy is Script {
     address erc1155Rails = 0x053809DFdd2443616d324c93e1DFC6a2076F976B;
     address registryExtension = 0x65b6e79D72bB53969a58Ac28Aaa32BA2cF6A6Ae2;
     address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
-    address tokenMetadataExtension = 0x717d8876a2DD3e46f88FD2128e50F952C8937f9a;
-    address metadataExtension = 0xceEaeC9dC4055e05C7A9E7B7A72e556Eb7456CB4;
+    address baseMetadataExtension = 0x45438bA80530B6feeB3A6fd426b8E344D00B604E;
+    address traitMetadataExtension = 0x7ee95388ABc3B500667D7fEB70d70C9728014598;
     address frog = 0x65A3870F48B5237f27f674Ec42eA1E017E111D63;
     address martin = 0x55045DA52be49461aF91a235E4303D4a9B2312AE;
     bytes32 salt = 0x00000000;
@@ -87,15 +87,15 @@ contract Deploy is Script {
         `ext_setup` is necessary to call before using the extension, as it sets the proper addresses.
       ============*/
       bytes memory addSetupMetadata = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_setup.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_setup.selector, address(baseMetadataExtension));
 
       bytes memory addTokenURIExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_tokenURI.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_tokenURI.selector, address(baseMetadataExtension));
 
       bytes memory addContractURIExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector,
-        ITokenMetadataExtension.ext_contractURI.selector,
-        address(tokenMetadataExtension));
+        IBaseMetadataExtension.ext_contractURI.selector,
+        address(baseMetadataExtension));
 
       bytes memory permitFrogAdmin =
         abi.encodeWithSelector(Permissions.addPermission.selector, Operations.ADMIN, frog);
@@ -150,10 +150,13 @@ contract Deploy is Script {
       );
 
       bytes memory addSetupMetadataExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, IMetadataExtension.ext_setup.selector, address(metadataExtension));
+        IExtensions.setExtension.selector, ITraitMetadataExtension.ext_setup.selector, address(traitMetadataExtension));
+
+      bytes memory addContractURIExtension = abi.encodeWithSelector(
+        IExtensions.setExtension.selector, ITraitMetadataExtension.ext_contractURI.selector, address(traitMetadataExtension));
 
       bytes memory addTokenURIExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, IMetadataExtension.ext_tokenURI.selector, address(metadataExtension));
+        IExtensions.setExtension.selector, ITraitMetadataExtension.ext_tokenURI.selector, address(traitMetadataExtension));
 
       bytes memory permitFrogAdmin =
         abi.encodeWithSelector(Permissions.addPermission.selector, Operations.ADMIN, frog);
@@ -161,7 +164,7 @@ contract Deploy is Script {
       bytes memory permitMartinAdmin =
         abi.encodeWithSelector(Permissions.addPermission.selector, Operations.ADMIN, martin);
 
-      bytes[] memory initCalls = new bytes[](10);
+      bytes[] memory initCalls = new bytes[](11);
       initCalls[0] = addAddTokenIdExtension;
       initCalls[1] = addRemoveTokenIdExtension;
       initCalls[2] = addGetAllExtension;
@@ -169,9 +172,10 @@ contract Deploy is Script {
       initCalls[4] = addRegisterTraitExtension;
       initCalls[5] = addGetImageDataExtension;
       initCalls[6] = addSetupMetadataExtension;
-      initCalls[7] = addTokenURIExtension;
-      initCalls[8] = permitFrogAdmin;
-      initCalls[9] = permitMartinAdmin;
+      initCalls[7] = addContractURIExtension;
+      initCalls[8] = addTokenURIExtension;
+      initCalls[9] = permitFrogAdmin;
+      initCalls[10] = permitMartinAdmin;
 
       bytes memory initData = abi.encodeWithSelector(Multicall.multicall.selector, initCalls);
 

@@ -8,23 +8,23 @@ import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
 import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
 import { Easel } from "../src/Easel.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { MetadataExtension } from "../src/extensions/metadata/MetadataExtension.sol";
-import { IMetadataExtension } from "../src/extensions/metadata/IMetadataExtension.sol";
+import { TraitMetadataExtension } from "../src/extensions/traitMetadata/TraitMetadataExtension.sol";
+import { ITraitMetadataExtension } from "../src/extensions/traitMetadata/ITraitMetadataExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 
 
-/// @title MetadataTest
+/// @title TraitMetadataTest
 /// @author frog @0xmcg
 /// @notice Test for metadata -- which is the tokenURI for an individual trait (not the nested trait for a TBA)
 /// maybe should call the other contract "TBAMetadataExtension" or something
-contract MetadataTest is Test {
+contract TraitMetadataTest is Test {
     address public caller = address(1);
     address public fake = address(2);
     Easel public easel;
-    MetadataExtension public metadataExtension;
+    TraitMetadataExtension public traitMetadataExtension;
     TokenFactory public tokenFactoryImpl;
     TokenFactory public tokenFactoryProxy;
     ERC1155Rails public erc1155Rails;
@@ -39,7 +39,7 @@ contract MetadataTest is Test {
       easel = new Easel();
       erc1155Rails = new ERC1155Rails();
       registryExtension = new RegistryExtension();
-      metadataExtension = new MetadataExtension(address(easel));
+      traitMetadataExtension = new TraitMetadataExtension(address(easel));
 
       tokenFactoryImpl = new TokenFactory();
       tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
@@ -50,7 +50,7 @@ contract MetadataTest is Test {
       _registerTraits();
       _addColorsToPalette();
 
-      IMetadataExtension(erc1155tokenContract).ext_setup(address(easel));
+      ITraitMetadataExtension(erc1155tokenContract).ext_setup(address(easel));
     }
 
 
@@ -65,15 +65,15 @@ contract MetadataTest is Test {
       );
 
       bytes memory addSetupMetadata = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, IMetadataExtension.ext_setup.selector, address(metadataExtension));
+        IExtensions.setExtension.selector, ITraitMetadataExtension.ext_setup.selector, address(traitMetadataExtension));
 
       bytes memory addTokenURIExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, IMetadataExtension.ext_tokenURI.selector, address(metadataExtension));
+        IExtensions.setExtension.selector, ITraitMetadataExtension.ext_tokenURI.selector, address(traitMetadataExtension));
 
       bytes memory addContractURIExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector,
-        IMetadataExtension.ext_contractURI.selector,
-        address(metadataExtension));
+        ITraitMetadataExtension.ext_contractURI.selector,
+        address(traitMetadataExtension));
 
       bytes[] memory initCalls = new bytes[](5);
       initCalls[0] = addRegisterTraitExtension;
@@ -356,7 +356,6 @@ contract MetadataTest is Test {
       uint256 tokenId1 = 1;
 
       string memory output = ERC1155Rails(erc1155tokenContract).uri(tokenId1);
-      console2.log(output);
       assertEq(output, expectedSVG);
       // assertEq(ERC721Rails(erc1155tokenContract).contractURI(), "TEMP_CONTRACT_URI");
       vm.stopPrank();

@@ -2,8 +2,11 @@
 
 ### Todo
 
-- [] possibly add the more elaborate "mint module per tokenId" controller?
-- [] traits as "trait" of NPC (tokenURI details)
+- [] totally free mint module for base (can we have no module and remove permissions for mint?)
+- [] time based mint
+- [] capped supply mint
+- [] update ext_contractURI for tokenMetadataExtension + metadataExtension
+- [] traits as "trait" of NPC (tokenURI details... make it so the traits owned by an NPC show up as traits of the the NPC...)
 - [] make sure equippable extension is easy to use (might need to improve equipping multiple at once, or what happens with multicall)
 - [] make it easy to mint base NFT + deploy 6551 account + possibly mint traits all in one tx? (onboarding UX)
 

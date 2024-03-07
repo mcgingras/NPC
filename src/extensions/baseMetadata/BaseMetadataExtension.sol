@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import { Extension } from "0xrails/extension/Extension.sol";
-import { TokenMetadataExtensionData } from "./TokenMetadataExtensionData.sol";
+import { BaseMetadataExtensionData } from "./BaseMetadataExtensionData.sol";
 import { Easel } from "../../Easel.sol";
 import { IERC6551Registry } from "../../ERC6551Registry.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
@@ -11,12 +11,14 @@ import "openzeppelin-contracts/utils/Base64.sol";
 import "openzeppelin-contracts/utils/Strings.sol";
 
 
-contract TokenMetadataExtension is Extension {
+/// @title BaseMetadataExtension
+/// @notice Extension for generating token URIs for the 721 base NFT token
+contract BaseMetadataExtension is Extension {
     using Strings for uint256;
 
     constructor(address _easel, address _erc6551Registry) Extension() {
-        TokenMetadataExtensionData.layout().easel = _easel;
-        TokenMetadataExtensionData.layout().erc6551Registry = _erc6551Registry;
+        BaseMetadataExtensionData.layout().easel = _easel;
+        BaseMetadataExtensionData.layout().erc6551Registry = _erc6551Registry;
     }
 
     /*===============
@@ -45,11 +47,10 @@ contract TokenMetadataExtension is Extension {
         }
     }
 
-    // not sure why these are not being set in the constructor?
     function ext_setup(address registry, address easel, address traitContractAddress, address implementation, uint256 chainId, bytes32 salt) external {
-        TokenMetadataExtensionData.layout().erc6551Registry = registry;
-        TokenMetadataExtensionData.layout().easel = easel;
-        TokenMetadataExtensionData.layout().accountConfigs[address(this)] = TokenMetadataExtensionData.Account({
+        BaseMetadataExtensionData.layout().erc6551Registry = registry;
+        BaseMetadataExtensionData.layout().easel = easel;
+        BaseMetadataExtensionData.layout().accountConfigs[address(this)] = BaseMetadataExtensionData.Account({
             traitContractAddress: traitContractAddress,
             implementation: implementation,
             chainId: chainId,
@@ -57,20 +58,21 @@ contract TokenMetadataExtension is Extension {
         });
     }
 
-    // if this is a proper extension then we would probably want to store this per address, probably in the setup
+    // TODO:
+    // Implement this function for 1155 tokens
     function ext_contractURI() external pure returns (string memory uri) {
         string memory json = '{"name":"Noun Playable Citizens","description":"Tokenbound Nouns.""image":"","external_link": ""}';
         return string.concat("data:application/json;utf8,", json);
     }
 
     function ext_tokenURI(uint256 tokenId) external returns (string memory uri) {
-      require(TokenMetadataExtensionData.layout().easel != address(0), "TokenMetadataExtension: easel not configured");
-      require(TokenMetadataExtensionData.layout().erc6551Registry != address(0), "TokenMetadataExtension: erc6551Registry not configured");
-      require(TokenMetadataExtensionData.layout().accountConfigs[address(this)].implementation != address(0), "TokenMetadataExtension: nftContractAddress not configured");
+      require(BaseMetadataExtensionData.layout().easel != address(0), "BaseMetadataExtension: easel not configured");
+      require(BaseMetadataExtensionData.layout().erc6551Registry != address(0), "BaseMetadataExtension: erc6551Registry not configured");
+      require(BaseMetadataExtensionData.layout().accountConfigs[address(this)].implementation != address(0), "BaseMetadataExtension: nftContractAddress not configured");
 
-      TokenMetadataExtensionData.Account memory account = TokenMetadataExtensionData.layout().accountConfigs[address(this)];
-      address easel = TokenMetadataExtensionData.layout().easel;
-      address erc6551Registry = TokenMetadataExtensionData.layout().erc6551Registry;
+      BaseMetadataExtensionData.Account memory account = BaseMetadataExtensionData.layout().accountConfigs[address(this)];
+      address easel = BaseMetadataExtensionData.layout().easel;
+      address erc6551Registry = BaseMetadataExtensionData.layout().erc6551Registry;
 
       address tbaAddressForToken = IERC6551Registry(erc6551Registry).account(
           account.implementation,

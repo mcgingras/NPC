@@ -14,7 +14,6 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 // forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xDA206772674FDd37554B5B157168BA2CcA8D1bB2 src/extensions/registry/RegistryExtension.sol:RegistryExtension --watch
 // forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xF0c5255799b29439c121f0Db6DFb969578d55f24 src/Easel.sol:Easel --watch
 
-
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
@@ -22,14 +21,13 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 /// address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
 /// address easel = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
 
-
 /// @notice Script for deploying the "independent" extensions -- aka the extensions that do not have any dependencies.
 contract Deploy is Script {
     function run() public {
         vm.startBroadcast();
-        RegistryExtension registryExtension = new RegistryExtension();
-        EquippableExtension equippableExtension = new EquippableExtension();
-        Easel easel = new Easel();
+        new RegistryExtension();
+        new EquippableExtension();
+        new Easel();
         vm.stopBroadcast();
     }
 }

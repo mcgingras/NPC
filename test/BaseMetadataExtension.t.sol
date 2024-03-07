@@ -11,24 +11,24 @@ import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
+import { BaseMetadataExtension } from "../src/extensions/baseMetadata/BaseMetadataExtension.sol";
+import { IBaseMetadataExtension } from "../src/extensions/baseMetadata/IBaseMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
 
 
-/// @title TokenMetadataExtensionTest
+/// @title BaseMetadataExtensionTest
 /// @author frog @0xmcg
 /// @notice Tests the 0xRails factory + custom metadata extensions for Noun Citizens.
-contract TokenMetadataExtensionTest is Test {
+contract BaseMetadataExtensionTest is Test {
     address public caller = address(1);
     address public fake = address(2);
     ERC6551Registry public registry;
     ERC6551Account public accountImpl;
     Easel public easel;
-    TokenMetadataExtension public tokenMetadataExtension;
+    BaseMetadataExtension public baseMetadataExtension;
     TokenFactory public tokenFactoryImpl;
     TokenFactory public tokenFactoryProxy;
     ERC721Rails public erc721Rails;
@@ -49,7 +49,7 @@ contract TokenMetadataExtensionTest is Test {
       erc1155Rails = new ERC1155Rails();
       equippableExtension = new EquippableExtension();
       registryExtension = new RegistryExtension();
-      tokenMetadataExtension = new TokenMetadataExtension(address(easel), address(registry));
+      baseMetadataExtension = new BaseMetadataExtension(address(easel), address(registry));
       tokenFactoryImpl = new TokenFactory();
       tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
       tokenFactoryProxy.initialize(caller, fake, address(erc721Rails), address(erc1155Rails));
@@ -61,15 +61,15 @@ contract TokenMetadataExtensionTest is Test {
     function deployCitizenContract() public returns (address payable) {
       vm.startPrank(caller);
       bytes memory addSetupMetadata = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_setup.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_setup.selector, address(baseMetadataExtension));
 
       bytes memory addTokenURIExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_tokenURI.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_tokenURI.selector, address(baseMetadataExtension));
 
       bytes memory addContractURIExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector,
-        ITokenMetadataExtension.ext_contractURI.selector,
-        address(tokenMetadataExtension));
+        IBaseMetadataExtension.ext_contractURI.selector,
+        address(baseMetadataExtension));
 
       bytes[] memory initCalls = new bytes[](3);
       initCalls[0] = addSetupMetadata;
@@ -133,7 +133,7 @@ contract TokenMetadataExtensionTest is Test {
 
     function test_TokenURIExtension() public {
       vm.startPrank(caller);
-      ITokenMetadataExtension(erc721tokenContract).ext_setup(address(registry), address(easel), erc1155tokenContract, address(accountImpl), block.chainid, bytes32(0));
+      IBaseMetadataExtension(erc721tokenContract).ext_setup(address(registry), address(easel), erc1155tokenContract, address(accountImpl), block.chainid, bytes32(0));
       assertEq(ERC721Rails(erc721tokenContract).name(), "Noun Citizens");
       assertEq(ERC721Rails(erc721tokenContract).tokenURI(0), emptySVG);
       // assertEq(ERC721Rails(erc721tokenContract).contractURI(), "TEMP_CONTRACT_URI"); // now returns json

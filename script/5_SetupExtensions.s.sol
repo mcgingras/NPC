@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
-import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
+import { IBaseMetadataExtension } from "../src/extensions/baseMetadata/IBaseMetadataExtension.sol";
 
 /// -----------------
 /// SCRIPTS
@@ -18,7 +18,7 @@ contract Deploy is Script {
 
     function run() public {
       vm.startBroadcast();
-      ITokenMetadataExtension(npc721TokenContract).ext_setup(
+      IBaseMetadataExtension(npc721TokenContract).ext_setup(
         address(erc6551Registry),
         address(easel),
         erc1155tokenContract,
@@ -26,8 +26,8 @@ contract Deploy is Script {
         block.chainid,
         bytes32(0)
       );
-      // TODO: --
-      // add transfer guard to the 1155
+      // TODO -- add metadata extension to the 1155
+      // TODO: --  add transfer guard to the 1155
       vm.stopBroadcast();
     }
 }

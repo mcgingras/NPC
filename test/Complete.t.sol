@@ -11,8 +11,8 @@ import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
+import { BaseMetadataExtension } from "../src/extensions/baseMetadata/BaseMetadataExtension.sol";
+import { IBaseMetadataExtension } from "../src/extensions/baseMetadata/IBaseMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
@@ -25,13 +25,14 @@ import { IEasel } from "../src/interfaces/IEasel.sol";
 /// @title CompleteTest
 /// @author frog @0xmcg
 /// @notice E2E test.
+/// TODO: add traitMetadataExtension to test 1155 NFT rendering
 contract CompleteTest is Test {
     address public caller = address(1);
     address public fake = address(2);
     ERC6551Registry public registry;
     ERC6551Account public accountImpl;
     Easel public easel;
-    TokenMetadataExtension public tokenMetadataExtension;
+    BaseMetadataExtension public baseMetadataExtension;
     TokenFactory public tokenFactoryImpl;
     TokenFactory public tokenFactoryProxy;
     ERC721Rails public erc721Rails;
@@ -59,7 +60,7 @@ contract CompleteTest is Test {
       erc1155Rails = new ERC1155Rails();
       equippableExtension = new EquippableExtension();
       registryExtension = new RegistryExtension();
-      tokenMetadataExtension = new TokenMetadataExtension(address(easel), address(registry));
+      baseMetadataExtension = new BaseMetadataExtension(address(easel), address(registry));
 
       tokenFactoryImpl = new TokenFactory();
       tokenFactoryProxy = TokenFactory(address(new ERC1967Proxy(address(tokenFactoryImpl), '')));
@@ -67,7 +68,7 @@ contract CompleteTest is Test {
 
       erc1155tokenContract = this.deployTraitContract();
       erc721tokenContract = this.deployCitizenContract();
-      ITokenMetadataExtension(
+      IBaseMetadataExtension(
         erc721tokenContract).ext_setup(address(registry),
         address(easel),
         erc1155tokenContract,
@@ -84,15 +85,15 @@ contract CompleteTest is Test {
     function deployCitizenContract() public returns (address payable) {
       vm.startPrank(caller);
       bytes memory addSetupMetadata = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_setup.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_setup.selector, address(baseMetadataExtension));
 
       bytes memory addTokenURIExtension = abi.encodeWithSelector(
-        IExtensions.setExtension.selector, ITokenMetadataExtension.ext_tokenURI.selector, address(tokenMetadataExtension));
+        IExtensions.setExtension.selector, IBaseMetadataExtension.ext_tokenURI.selector, address(baseMetadataExtension));
 
       bytes memory addContractURIExtension = abi.encodeWithSelector(
         IExtensions.setExtension.selector,
-        ITokenMetadataExtension.ext_contractURI.selector,
-        address(tokenMetadataExtension));
+        IBaseMetadataExtension.ext_contractURI.selector,
+        address(baseMetadataExtension));
 
       bytes[] memory initCalls = new bytes[](3);
       initCalls[0] = addSetupMetadata;

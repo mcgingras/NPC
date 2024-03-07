@@ -3,18 +3,19 @@ pragma solidity ^0.8.13;
 
 import { console2 } from "forge-std/Test.sol";
 import { Extension } from "0xrails/extension/Extension.sol";
-import { MetadataExtensionData } from "./MetadataExtensionData.sol";
+import { TraitMetadataExtensionData } from "./TraitMetadataExtensionData.sol";
 import { Easel } from "../../Easel.sol";
 import { IRegistryExtension } from "../../extensions/registry/IRegistryExtension.sol";
 import "openzeppelin-contracts/utils/Base64.sol";
 import "openzeppelin-contracts/utils/Strings.sol";
 
-contract MetadataExtension is Extension {
+/// @title TraitMetadataExtension
+/// @notice Extension for generating token URIs for the 1155 trait tokens
+contract TraitMetadataExtension is Extension {
     using Strings for uint256;
 
-    // no matter what I do, the constructor is set but seems to be wiped out....
     constructor(address _easel) Extension() {
-        MetadataExtensionData.layout().easel = _easel;
+        TraitMetadataExtensionData.layout().easel = _easel;
     }
 
     /*===============
@@ -43,20 +44,18 @@ contract MetadataExtension is Extension {
         }
     }
 
-    // not sure why these are not being set in the constructor?
     function ext_setup(address easel) external {
-        MetadataExtensionData.layout().easel = easel;
+        TraitMetadataExtensionData.layout().easel = easel;
     }
 
-    // if this is a proper extension then we would probably want to store this per address
     function ext_contractURI() external pure returns (string memory uri) {
         string memory json = '{"name":"Noun Playable Citizens Trait","description":"Tokenbound Nouns traits.""image":"","external_link": ""}';
         return string.concat("data:application/json;utf8,", json);
     }
 
     function ext_tokenURI(uint256 tokenId) external returns (string memory uri) {
-      require(MetadataExtensionData.layout().easel != address(0), "TokenMetadataExtension: easel not configured");
-      address easel = MetadataExtensionData.layout().easel;
+      require(TraitMetadataExtensionData.layout().easel != address(0), "TraitMetadataExtension: easel not configured");
+      address easel = TraitMetadataExtensionData.layout().easel;
 
       bytes[] memory parts = new bytes[](1);
       bytes memory data = IRegistryExtension(address(this)).ext_getImageDataForTrait(tokenId);

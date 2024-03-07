@@ -7,8 +7,6 @@ import { IERC1155Rails } from "0xrails/cores/ERC1155/interface/IERC1155Rails.sol
 import { IExtensions } from "0xrails/extension/interface/IExtensions.sol";
 import { Multicall } from "openzeppelin-contracts/utils/Multicall.sol";
 import { TokenFactory } from "groupos/factory/TokenFactory.sol";
-import { TokenMetadataExtension } from "../src/extensions/tokenMetadata/tokenMetadataExtension.sol";
-import { ITokenMetadataExtension } from "../src/extensions/tokenMetadata/ITokenMetadataExtension.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { IEquippableExtension } from "../src/extensions/equippable/IEquippableExtension.sol";
 import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
