@@ -58,8 +58,7 @@ contract BaseMetadataExtension is Extension {
         });
     }
 
-    // TODO:
-    // Implement this function for 1155 tokens
+    // TODO: add image + link
     function ext_contractURI() external pure returns (string memory uri) {
         string memory json = '{"name":"Noun Playable Citizens","description":"Tokenbound Nouns.""image":"","external_link": ""}';
         return string.concat("data:application/json;utf8,", json);

@@ -12,7 +12,7 @@ library BaseMetadataExtensionData {
     }
 
     struct Layout {
-        address easel; // TODO: make this a mapping of address => "rendering contract"
+        address easel;
         address erc6551Registry;
         mapping(address => Account) accountConfigs;
     }

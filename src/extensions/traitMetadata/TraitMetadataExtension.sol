@@ -14,6 +14,8 @@ import "openzeppelin-contracts/utils/Strings.sol";
 contract TraitMetadataExtension is Extension {
     using Strings for uint256;
 
+    // TODO: it's possible this isn't necessary because we need to call setup anyways
+    // whats the difference between this and the setup function?
     constructor(address _easel) Extension() {
         TraitMetadataExtensionData.layout().easel = _easel;
     }
@@ -48,6 +50,7 @@ contract TraitMetadataExtension is Extension {
         TraitMetadataExtensionData.layout().easel = easel;
     }
 
+    // TODO: add image + link
     function ext_contractURI() external pure returns (string memory uri) {
         string memory json = '{"name":"Noun Playable Citizens Trait","description":"Tokenbound Nouns traits.""image":"","external_link": ""}';
         return string.concat("data:application/json;utf8,", json);
