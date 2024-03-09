@@ -5,6 +5,7 @@ import {Script, console2} from "forge-std/Script.sol";
 import { Easel } from "../src/Easel.sol";
 import { EquippableExtension } from "../src/extensions/equippable/EquippableExtension.sol";
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
+import { EquipTransferGuard } from "../src/guards/EquipGuard.sol";
 
 /// -----------------
 /// SCRIPTS
@@ -20,6 +21,7 @@ import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.
 /// address registryExtension = 0x65b6e79D72bB53969a58Ac28Aaa32BA2cF6A6Ae2;
 /// address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
 /// address easel = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
+/// address equipTransferGuard = 0x000.......;
 
 /// @notice Script for deploying the "independent" extensions -- aka the extensions that do not have any dependencies.
 contract Deploy is Script {
@@ -28,6 +30,8 @@ contract Deploy is Script {
         new RegistryExtension();
         new EquippableExtension();
         new Easel();
+        new EquipTransferGuard();
+
         vm.stopBroadcast();
     }
 }
