@@ -7,21 +7,22 @@ import { EquippableExtension } from "../src/extensions/equippable/EquippableExte
 import { RegistryExtension } from "../src/extensions/registry/RegistryExtension.sol";
 import { EquipTransferGuard } from "../src/guards/EquipGuard.sol";
 
+// 84532
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/0_DeployIndependentExtensions.s.sol:Deploy
-// forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0x31Ad4E29Eb81aC275bD6B61cbeA417ffF7d81F76 src/extensions/equippable/EquippableExtension.sol:EquippableExtension --watch
-// forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xDA206772674FDd37554B5B157168BA2CcA8D1bB2 src/extensions/registry/RegistryExtension.sol:RegistryExtension --watch
-// forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xF0c5255799b29439c121f0Db6DFb969578d55f24 src/Easel.sol:Easel --watch
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/0_DeployIndependentExtensions.s.sol:Deploy
+// forge verify-contract --chain 84532 --etherscan-api-key $ETHERSCAN_API_KEY 0x31Ad4E29Eb81aC275bD6B61cbeA417ffF7d81F76 src/extensions/equippable/EquippableExtension.sol:EquippableExtension --watch
+// forge verify-contract --chain 84532 --etherscan-api-key $ETHERSCAN_API_KEY 0xDA206772674FDd37554B5B157168BA2CcA8D1bB2 src/extensions/registry/RegistryExtension.sol:RegistryExtension --watch
+// forge verify-contract --chain 84532 --etherscan-api-key $ETHERSCAN_API_KEY 0xF0c5255799b29439c121f0Db6DFb969578d55f24 src/Easel.sol:Easel --watch
 
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// address registryExtension = 0x65b6e79D72bB53969a58Ac28Aaa32BA2cF6A6Ae2;
-/// address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
-/// address easel = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
-/// address equipTransferGuard = 0x000.......;
+/// address registryExtension = 0x92ee25B0f5aBE7e9477D357314bF5ffd8CD52c1F;
+/// address equippableExtension = 0x95AD1fA839105Fccc699Fa0a38c644cBFD30599e;
+/// address easel = 0x9320Fc9A6DE47A326fBd12795Ba731859360cdaD;
+/// address equipTransferGuard = 0x0512105FC31bd1a35C48289908de89D9412B3d94;
 
 /// @notice Script for deploying the "independent" extensions -- aka the extensions that do not have any dependencies.
 contract Deploy is Script {
@@ -31,7 +32,6 @@ contract Deploy is Script {
         new EquippableExtension();
         new Easel();
         new EquipTransferGuard();
-
         vm.stopBroadcast();
     }
 }

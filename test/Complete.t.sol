@@ -5,8 +5,8 @@ import { Test, console2 } from "forge-std/Test.sol";
 import { ERC721Rails } from "0xrails/cores/ERC721/ERC721Rails.sol";
 import { ERC1155Rails } from "0xrails/cores/ERC1155/ERC1155Rails.sol";
 import { IERC1155Rails } from "0xrails/cores/ERC1155/interface/IERC1155Rails.sol";
-import {IExtensions} from "0xrails/extension/interface/IExtensions.sol";
-import {Multicall} from "openzeppelin-contracts/utils/Multicall.sol";
+import { IExtensions } from "0xrails/extension/interface/IExtensions.sol";
+import { Multicall } from "openzeppelin-contracts/utils/Multicall.sol";
 import { Easel } from "../src/Easel.sol";
 import { ERC6551Registry } from "../src/ERC6551Registry.sol";
 import { ERC6551Account } from "../src/ERC6551Account.sol";
@@ -22,12 +22,9 @@ import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtensio
 import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import { IEasel } from "../src/interfaces/IEasel.sol";
 
-
-
 /// @title CompleteTest
 /// @author frog @0xmcg
 /// @notice E2E test.
-/// TODO: add traitMetadataExtension to test 1155 NFT rendering
 /// forge t --mc CompleteTest -vvv
 contract CompleteTest is Test {
     address public caller = address(1);

@@ -1,22 +1,22 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {Script, console2} from "forge-std/Script.sol";
-import { IEasel } from "../src/interfaces/IEasel.sol";
-import { IRegistryExtension } from "../src/extensions/registry/IRegistryExtension.sol";
+import { Test, console2 } from "forge-std/Test.sol";
+import { Easel } from "../../src/Easel.sol";
+import { IEasel } from "../../src/interfaces/IEasel.sol";
 
-/// -----------------
-/// SCRIPTS
-/// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/3_AddColors.s.sol:Deploy
-
-contract Deploy is Script {
-    address public easel = 0x9320Fc9A6DE47A326fBd12795Ba731859360cdaD;
+/// @title EaselImpl
+/// @author frog @0xmcg
+/// @notice Creates a Easel
+contract EaselImpl is Test {
+    Easel public easel;
     string public file;
     uint8 paletteIndex = 0;
 
-    function setUp() public {
+    constructor() {
+      easel = new Easel();
       file = readInput("image-data-v1");
+      addColorsToEasel(".palette");
     }
 
     function readInput(string memory input) view internal returns (string memory) {
@@ -31,9 +31,7 @@ contract Deploy is Script {
       IEasel(easel).addManyColorsToPalette(paletteIndex, newColors);
     }
 
-    function run() public {
-    vm.startBroadcast();
-    addColorsToEasel(".palette");
-    vm.stopBroadcast();
+    function getEasel() public view returns (Easel) {
+      return easel;
     }
 }

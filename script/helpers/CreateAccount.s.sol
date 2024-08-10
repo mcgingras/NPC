@@ -7,7 +7,7 @@ import { ERC6551Registry } from "../../src/ERC6551Registry.sol";
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/helpers/CreateAccount.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/helpers/CreateAccount.s.sol:Deploy
 
 /// tba - tokenId
 /// 0x1dcdbd35c21eB88172F154cad0100896e8B4327d - 1

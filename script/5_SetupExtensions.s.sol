@@ -9,15 +9,15 @@ import { ERC1155Rails } from "0xrails/cores/ERC1155/ERC1155Rails.sol";
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/5_SetupExtensions.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/5_SetupExtensions.s.sol:Deploy
 
 contract Deploy is Script {
-    address public erc1155tokenContract = 0x8F071320A60E4Aac7dA5FBA5F201F9bcc66f86e9;
-    address public npc721TokenContract = 0xF1eFc9e4C5238C5bCf3d30774480325893435a2A;
+    address public erc1155tokenContract = 0xb185d82B82257994c4f252Cc094385657370083b;
+    address public npc721TokenContract = 0x0AEA8ce800c5609e61E799648195620d1B62B3fd;
     address public erc6551Registry = 0x000000006551c19487814612e58FE06813775758;
     address public erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
-    address public easel = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
-    address public equipTransferGuard = 0x74c3DbC26278bc2Ef8C7ff1cb7ece926c17adB0a;
+    address public easel = 0x9320Fc9A6DE47A326fBd12795Ba731859360cdaD;
+    address public equipTransferGuard = 0x0512105FC31bd1a35C48289908de89D9412B3d94;
 
     function run() public {
       vm.startBroadcast();

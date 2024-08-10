@@ -9,14 +9,14 @@ import { FreeMintController } from "../src/modules/FreeMintController.sol";
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/6_AddMintController.s.sol:Deploy
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/6_AddMintController.s.sol:Deploy
 
-// -- FreeMintController = 0xDF5BB9e221c2Ee30a8EA0AD693B85E10B55fE951
-// -- FeeMananger = 0xC1A5fA81B1C0768c73242e6891e3032C360B8821
+// -- FreeMintController = 0x2C30c5E187145Fbbf595bB623939FEF639ed4600
+// -- FeeMananger = 0xf3947789Cb449C001C22a055761bab65Af5AA33E
 
 contract Deploy is Script {
-    address public erc1155tokenContract = 0x8F071320A60E4Aac7dA5FBA5F201F9bcc66f86e9;
-    address public erc721tokenContract = 0xF1eFc9e4C5238C5bCf3d30774480325893435a2A;
+    address public erc1155tokenContract = 0xb185d82B82257994c4f252Cc094385657370083b;
+    address public erc721tokenContract = 0x0AEA8ce800c5609e61E799648195620d1B62B3fd;
     FeeManager public feeManager;
     FreeMintController public freeMintController;
 

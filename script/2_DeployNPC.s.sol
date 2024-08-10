@@ -26,15 +26,15 @@ import { ITraitMetadataExtension } from "../src/extensions/traitMetadata/ITraitM
 /// -----------------
 /// SCRIPTS
 /// -----------------
-// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $SEPOLIA_RPC_URL script/2_DeployNPC.s.sol:Deploy
-// forge verify-contract --chain 5 --etherscan-api-key $ETHERSCAN_API_KEY 0xb7539fbfcbe9e64e85ea865980cd47e0962aae6d src/Character.sol:Character
+// forge script --keystores $ETH_KEYSTORE --sender $ETH_FROM --broadcast --fork-url $BASE_SEPOLIA_RPC_URL script/2_DeployNPC.s.sol:Deploy
+// forge verify-contract --chain 84532 --etherscan-api-key $ETHERSCAN_API_KEY 0xb185d82B82257994c4f252Cc094385657370083b 0xrails/cores/ERC1155/ERC1155Rails.sol
 
 
 /// -----------------
 /// FINAL CONTRACT ADDRESSES
 /// -----------------
-/// NPC (721) = 0xF1eFc9e4C5238C5bCf3d30774480325893435a2A
-/// Traits (1155) = 0x9A349CF5F69c12423111b729564D43022eC875F1
+/// NPC (721) = 0x0AEA8ce800c5609e61E799648195620d1B62B3fd
+/// Traits (1155) = 0xb185d82B82257994c4f252Cc094385657370083b
 
 interface ITokenFactory {
   function createERC721(
@@ -64,18 +64,19 @@ contract Deploy is Script {
     string public name = "Noun Citizens";
     string public symbol = "NPC";
 
-    /// @notice SEPOLIA: v1.0.0
+    /// @notice BASE SEPOLIA: v1.0.0
     /// @notice Tokenbound v0.3.1
-    address tokenFactory = 0x2C333bd1316cE1aF9EBF017a595D6f8AB5f6BD1A;
     address erc6551Registry = 0x000000006551c19487814612e58FE06813775758;
     address erc6551AccountProxy = 0x55266d75D1a14E4572138116aF39863Ed6596E7F;
     address erc6551AccountImpl = 0x41C8f39463A868d3A88af00cd0fe7102F30E44eC;
-    address erc721Rails = 0xB5764bd3AD21A58f723DB04Aeb97a428c7bdDE2a;
-    address erc1155Rails = 0x053809DFdd2443616d324c93e1DFC6a2076F976B;
-    address registryExtension = 0x65b6e79D72bB53969a58Ac28Aaa32BA2cF6A6Ae2;
-    address equippableExtension = 0x4E42265D34CE4B0d49014C480D0d38485154375b;
-    address baseMetadataExtension = 0x45438bA80530B6feeB3A6fd426b8E344D00B604E;
-    address traitMetadataExtension = 0x7ee95388ABc3B500667D7fEB70d70C9728014598;
+    address tokenFactory = 0x43fB252f9E2C64e532aB879B2153d6B717dE1C43;
+    address erc721Rails = 0xb43401Be3d96E22b259EFB0656d6aDaBE5Eaa6cF;
+    address erc1155Rails = 0x558eAd6671fdE2563bBB2AE454765904879aAdC6;
+    /// custom
+    address registryExtension = 0x92ee25B0f5aBE7e9477D357314bF5ffd8CD52c1F;
+    address equippableExtension = 0x95AD1fA839105Fccc699Fa0a38c644cBFD30599e;
+    address baseMetadataExtension = 0x232f550a04e7bC128F5850a7EB8aaFe60F3A3faE;
+    address traitMetadataExtension = 0x35Ae03B8a2862B2AdD7Cd7730A51077240C46a1E;
     address frog = 0x65A3870F48B5237f27f674Ec42eA1E017E111D63;
     address martin = 0x55045DA52be49461aF91a235E4303D4a9B2312AE;
     bytes32 salt = 0x00000000;
